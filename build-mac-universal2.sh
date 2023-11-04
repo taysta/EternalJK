@@ -1,6 +1,3 @@
-cd ..
-cd ..
-
 # game/app specific values
 export APP_VERSION="1.0"
 export ICONSDIR="codemp/macosx"
@@ -13,31 +10,23 @@ export SDKROOT="$(xcrun --sdk macosx --show-sdk-path)"
 
 #constants
 
-source scripts/universal2/constants.sh
+source constants.sh
 
 rm -rf "${BUILT_PRODUCTS_DIR}"
 
 #create makefiles with cmake, perform builds with make
-export TARGET="arm64-apple-darwin"
-export CFLAGS="$CFLAGS --target=$TARGET"
-export CXXFLAGS="$CXXFLAGS --target=$TARGET"
-
 rm -rf "${ARM64_BUILD_FOLDER}"
 mkdir "${ARM64_BUILD_FOLDER}"
 cd "${ARM64_BUILD_FOLDER}" || exit
-cmake -A "arm64" -DCMAKE_C_COMPILER_TARGET="$TARGET" -DCMAKE_CXX_COMPILER_TARGET="$TARGET" -DCMAKE_SYSTEM_PROCESSOR="arm64" -DCMAKE_SYSTEM_NAME="Darwin" -DCMAKE_C_FLAGS="$CFLAGS" -DCMAKE_CXX_FLAGS="$CXXFLAGS" -DCMAKE_INSTALL_PREFIX=./install -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 -DCMAKE_OSX_ARCHITECTURES=arm64 -DBuildDiscordRichPresence=OFF ../..
+cmake -DCMAKE_INSTALL_PREFIX=./install -DCMAKE_SYSTEM_PROCESSOR=arm64 -DCMAKE_SYSTEM_NAME=Darwin -DCMAKE_OSX_ARCHITECTURES=arm64 -DUseInternalLibs=ON -DBuildDiscordRichPresence=OFF -DCMAKE_BUILD_TYPE=Release ..
 make -j${NCPU}
 make install
 cd ..
 
-export TARGET="x86_64-apple-darwin"
-export CFLAGS="$CFLAGS --target=$TARGET"
-export CXXFLAGS="$CXXFLAGS --target=$TARGET"
-
 rm -rf "${X86_64_BUILD_FOLDER}"
 mkdir "${X86_64_BUILD_FOLDER}"
 cd "${X86_64_BUILD_FOLDER}" || exit
-cmake -A "x86_64" -DCMAKE_C_COMPILER_TARGET="$TARGET" -DCMAKE_CXX_COMPILER_TARGET="$TARGET" -DCMAKE_SYSTEM_PROCESSOR="x86_64" -DCMAKE_SYSTEM_NAME="Darwin" -DCMAKE_C_FLAGS="$CFLAGS" -DCMAKE_CXX_FLAGS="$CXXFLAGS" -DCMAKE_INSTALL_PREFIX=./install -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_OSX_ARCHITECTURES=x86_64 -DBuildDiscordRichPresence=OFF ../..
+cmake -DCMAKE_INSTALL_PREFIX=./install -DCMAKE_SYSTEM_PROCESSOR=x86_64 -DCMAKE_SYSTEM_NAME=Darwin -DCMAKE_OSX_ARCHITECTURES=x86_64 -DUseInternalLibs=ON -DBuildDiscordRichPresence=OFF -DCMAKE_BUILD_TYPE=Release ..
 make -j${NCPU}
 make install
 cd ..
@@ -66,7 +55,7 @@ echo mv "${ARM64_BUILD_FOLDER}/${EXECUTABLE_FOLDER_PATH}/eternaljk.arm64" "${ARM
 
 # create the app bundle
 # since the one reference in the executable is covered we can skip lipo and dylibbundler in this script
-"scripts/universal2/build_app_bundle.sh" "skiplipo"
+"./build_app_bundle.sh" "skiplipo"
 
 #lipo the executable and libs
 lipo "${X86_64_BUILD_FOLDER}/${EXECUTABLE_FOLDER_PATH}/${EXECUTABLE_NAME}" "${ARM64_BUILD_FOLDER}/${EXECUTABLE_FOLDER_PATH}/${EXECUTABLE_NAME}" -output "${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/${EXECUTABLE_NAME}" -create
@@ -107,4 +96,4 @@ mkdir "${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/${ARM64_LIBS_FOLDER}"
 cp -a "${ARM64_BUILD_FOLDER}/${EXECUTABLE_FOLDER_PATH}/${ARM64_LIBS_FOLDER}/." "${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/${ARM64_LIBS_FOLDER}"
 
 # #sign and notarize
-# "scripts/universal2/sign_and_notarize.sh" "$1"
+# "../scripts/universal2/sign_and_notarize.sh" "$1"

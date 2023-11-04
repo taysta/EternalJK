@@ -8,7 +8,7 @@ on:
 jobs:
   macos-universal2:
     name: macOS ${{ matrix.arch }} ${{ matrix.build_type }} (${{ matrix.portable}})
-    runs-on: macos-latest
+    runs-on: macos-latest-xlarge
     strategy:
       fail-fast: false
       matrix:
@@ -26,11 +26,11 @@ jobs:
 
       - name: Make build
         run: |
-          chmod +x scripts/universal2/build_universal2.sh
-          chmod +x scripts/universal2/build_app_bundle.sh
-          chmod +x scripts/universal2/constants.sh
-          chmod +x scripts/universal2/sign_and_notarize.sh
-          ./scripts/universal2/build_universal2.sh
+          chmod +x build-mac-universal2.sh
+          chmod +x build_app_bundle.sh
+          chmod +x constants.sh
+          chmod +x sign_and_notarize.sh
+          ./build-mac-universal2.sh
 
       - name: Create binary archive
         if: ${{ matrix.build_type == 'Release' }}
