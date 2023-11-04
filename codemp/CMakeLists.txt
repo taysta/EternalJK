@@ -31,7 +31,7 @@ if (GIT_FOUND)
 		add_custom_target(GET_GIT_TAG_AND_HASH
 		COMMAND "${CMAKE_SOURCE_DIR}/scripts/header/update_header.sh" "${CMAKE_BINARY_DIR}/shared/qcommon/q_version.h")
 	endif()
-endif()	
+endif()
 
 #    Add Game Project
 if(BuildMPGame)
@@ -396,7 +396,7 @@ if(BuildMPEngine)
 				set(MPEngineIncludeDirectories ${MPEngineIncludeDirectories} ${OpenJKLibDir}/discord-rpc/include)
 				set(MPEngineDefines ${MPEngineDefines} "DISCORD")
 				set(MPEngineLibraries ${MPEngineLibraries} ${OpenJKLibDir}/discord-rpc/lib/libdiscord-rpc.a)
-			endif(APPLE)
+			endif(APPLE AND NOT Architecture MATCHES "arm64")
 		endif(BuildDiscordRichPresence)
 	endif()
 
@@ -424,28 +424,44 @@ if(BuildMPEngine)
 	endif()
 
 	if(UseInternalSDL2)
-		if(CMAKE_SIZEOF_VOID_P EQUAL 4)
-			set(MPEngineLibraries
-				${MPEngineLibraries}
-				${OpenJKLibDir}/SDL2/lib/x86/SDL2main.lib
-				${OpenJKLibDir}/SDL2/lib/x86/SDL2.lib
-				)
-		else()
-			set(MPEngineLibraries
-				${MPEngineLibraries}
-				${OpenJKLibDir}/SDL2/lib/x64/SDL2main.x86_64.lib
-				${OpenJKLibDir}/SDL2/lib/x64/SDL2.x86_64.lib
-				)
-		endif()
+		if(MSVC)
+			if(CMAKE_SIZEOF_VOID_P EQUAL 4)
+				set(MPEngineLibraries
+					${MPEngineLibraries}
+					${OpenJKLibDir}/SDL2/lib/x86/SDL2main.lib
+					${OpenJKLibDir}/SDL2/lib/x86/SDL2.lib
+					)
+			else()
+				set(MPEngineLibraries
+					${MPEngineLibraries}
+					${OpenJKLibDir}/SDL2/lib/x64/SDL2main.x86_64.lib
+					${OpenJKLibDir}/SDL2/lib/x64/SDL2.x86_64.lib
+					)
+			endif()
 
-		set(MPEngineIncludeDirectories
-			${MPEngineIncludeDirectories}
-			${OpenJKLibDir}/SDL2/include
+				set(MPEngineIncludeDirectories
+					${MPEngineIncludeDirectories}
+					${OpenJKLibDir}/SDL2/include
+					)
+		elseif(APPLE)
+			set(MPEngineLibraries
+					${MPEngineLibraries}
+					${OpenJKLibDir}/SDL2/lib/macosx/ub2/libSDL2main.a
 			)
+			set(MPEngineIncludeDirectories
+					${MPEngineIncludeDirectories}
+					${OpenJKLibDir}/SDL2/include
+			)
+		endif(MSVC)
 	else()
-		find_package(SDL2 REQUIRED)
-		set(MPEngineIncludeDirectories ${MPEngineIncludeDirectories} ${SDL2_INCLUDE_DIR})
-		set(MPEngineLibraries ${MPEngineLibraries} ${SDL2_LIBRARY})
+		find_package(SDL2 REQUIRED CONFIG)
+		if (TARGET SDL2::SDL2)
+			set(SDL2_INCLUDE_DIRS "")
+			set(SDL2_LIBRARIES SDL2::SDL2)
+		endif()
+		string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES)
+		set(MPEngineIncludeDirectories ${MPEngineIncludeDirectories} ${SDL2_INCLUDE_DIRS})
+		set(MPEngineLibraries ${MPEngineLibraries} ${SDL2_LIBRARIES})
 	endif()
 
 	# EAX is Windows-Only (right?)
@@ -620,6 +636,11 @@ if(BuildMPEngine)
 		endif()
 	else(WIN32)
 		if(MakeApplicationBundles)
+			if(UseInternalSDL2)
+				set(MPEngineExtraInstallFiles
+						${OpenJKLibDir}/SDL2/bin/macosx/ub2/libSDL2-2.0.0.dylib
+				)
+			endif(UseInternalSDL2)
 			add_executable(${MPEngine} MACOSX_BUNDLE ${MPEngineFiles})
 			set_target_properties(${MPEngine} PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${MPDir}/macosx/OpenJKInfo.plist")
 		else(MakeApplicationBundles)
