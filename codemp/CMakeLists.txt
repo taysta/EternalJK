@@ -788,15 +788,15 @@ endif(BuildMPDed)
 
 install(FILES
 		${CMAKE_CURRENT_BINARY_DIR}/japro-assets.pk3
-		DESTINATION "${JKAInstallDir}/taystjk"
+		DESTINATION "${JKAInstallDir}/japro"
 		COMPONENT ${JKAMPCoreComponent})
 
 install(FILES
 		${CMAKE_SOURCE_DIR}/assets/settings/cosmetics/example.cosmetic
-		DESTINATION "${JKAInstallDir}/taystjk/settings/cosmetics/hats/"
+		DESTINATION "${JKAInstallDir}/japro/settings/cosmetics/hats/"
 		COMPONENT ${JKAMPCoreComponent})
 
 install(FILES
 		${CMAKE_SOURCE_DIR}/assets/settings/cosmetics/example.cosmetic
-		DESTINATION "${JKAInstallDir}/taystjk/settings/cosmetics/capes/"
+		DESTINATION "${JKAInstallDir}/japro/settings/cosmetics/capes/"
 		COMPONENT ${JKAMPCoreComponent})
