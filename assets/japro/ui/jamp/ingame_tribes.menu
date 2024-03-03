@@ -1,204 +1,498 @@
-//-----------------------------------------
-// MOVE MENU
-//-----------------------------------------
+#include "ui/jamp/menuext.h"
+//----------------------------------------------------------------------------------------------
+//
+//	TRIBES
+//
+//----------------------------------------------------------------------------------------------
 {
-	menuDef 
-	{
-		name					tribesmenu
-		visible					0
-		fullScreen				0
-		outOfBoundsClick
-		rect					142 352 96 110
-		focusColor				1 1 1 1
+    menuDef
+    {
+        name					"ingame_tribessetup"
+        rect					MENU_X 0 MENU_WIDTH SCREEN_HEIGHT
+        outOfBoundsClick
+        focusColor              COL_WHITE
+        descX					DESC_TEXT_X
+        descY					DESC_TEXT_Y
+        descScale				DESC_TEXT_SCALE
+        descColor				COL_WHITE
+        descAlignment			ITEM_ALIGN_LEFT
 
-		// Overall window backdrop
-		itemDef
-		{
-			name				tribes_background
-			group				none
-			style				WINDOW_STYLE_FILLED
-			rect				0 0 96 110
-			backcolor			0 0 .35 .9
-			forecolor			1 1 1 1
-			border				1
-			bordercolor			0 0 .8 1
-			visible				1
-			decoration
-		}
-
-        itemDef
+        onOpen
         {
-            name                tribesTitle
-            text                CLASS
-            rect                0 0 48 22
-            textalign           ITEM_ALIGN_CENTER
-            textalignx          24
-            textaligny          1
-            font                2
-            textscale           0.7
-            forecolor           1 1 1 1
-            visible             1
+            close               ingame
+            close				ingame_setup
+            HIDE_TABS
+            HIDE_SUBTABS
+            show                topbar
+            show			    tribes_video1
+            show                subtab1
         }
 
-		itemDef
-		{
-		    name                tribesLight
-			text				Light
-			type				1
-			rect				0 22 48 22
-			textalign			ITEM_ALIGN_CENTER
-			textalignx			24
-			textaligny			11
-			font				4
-			textscale			1
-			forecolor			0 0 1 1
-			visible				1
-			action
-			{
-				play			"sound/interface/button1.wav" ;
-				exec			"model jedi_hf" ;
-				uiScript		closeingame
-			}
-		}
-
-		itemDef
-		{
-		    name                tribesMedium
-			text				Medium
-			type				1
-			rect				0 44 48 22
-			textalign			ITEM_ALIGN_CENTER
-			textalignx			24
-			textaligny			11
-			font				4
-			textscale			1
-			forecolor			0.5 .5 0 1
-			visible				1
-			action
-			{
-				play			"sound/interface/button1.wav" ;
-				exec			"model shadowtrooper" ;
-				uiScript		closeingame
-			}
-		}
-
-		itemDef
-		{
-		    name				tribesHeavy
-			text				Heavy
-			type				1
-			rect				0 66 48 22
-			textalign			ITEM_ALIGN_CENTER
-			textalignx			24
-			textaligny			11
-			font				4
-			textscale			1
-			forecolor			1 0 0 1
-			visible				1
-			action
-			{
-				play			"sound/interface/button1.wav" ;
-				exec			"model reelo" ;
-				uiScript		closeingame
-			}
-		}
-
-        itemDef
+        onClose
         {
-            name                packTitle
-            text                PACK
-            rect                48 0 48 22
-            textalign           ITEM_ALIGN_CENTER
-            textalignx          24
-            textaligny          1
-            font                2
-            textscale           0.7
-            forecolor           1 1 1 1
-            visible             1
+            play				"sound/interface/button1"
+            hide                topbar
+            HIDE_TABS
+            HIDE_SUBTABS
         }
 
-		itemDef
-		{
-		    name				packShield
-			text				Shield
-			type				1
-			rect				48 22 48 22
-			textalign			ITEM_ALIGN_CENTER
-			textalignx			24
-			textaligny			1
-			font				4
-			textscale			1
-			forecolor			0 1 0.5 1
-			visible				1
-			action
-			{
-				play			"sound/interface/button1.wav" ;
-				exec			"cmd pack shield" ;
-				uiScript		closeingame
-			}
-		}
+        onESC
+        {
+            play				"sound/interface/button1"
+            hide                topbar
+            HIDE_TABS
+            HIDE_SUBTABS
+        }
 
-		itemDef
-		{
-		    name				packThrust
-			text				Thrust
-			type				1
-			rect				48 44 48 22
-			textalign			ITEM_ALIGN_CENTER
-			textalignx			24
-			textaligny			1
-			font				4
-			textscale			1
-			forecolor			0 .5 1 1
-			visible				1
-			action
-			{
-				play			"sound/interface/button1.wav" ;
-				exec			"cmd pack thrust" ;
-				uiScript		closeingame
-			}
-		}
+        //DUMMY HIGHLIGHT TO SHOW SELECTED TAB
+        HIGHLIGHT
+        DUMMYHIGHLIGHT
 
-		itemDef
-		{
-		    name                packBlink
-			text				Blink
-			type				1
-			rect				48 66 48 22
-			textalign			ITEM_ALIGN_CENTER
-			textalignx			24
-			textaligny			1
-			font				4
-			textscale			1
-			forecolor			1 0 0.5 1
-			visible				1
-			action
-			{
-				play			"sound/interface/button1.wav" ;
-				exec			"cmd pack blink" ;
-				uiScript		closeingame
-			}
-		}
+        //TOP BACKGROUND
+        ITEM_BACKGROUND(background_topbar,  topbar, 0 0 MENU_WIDTH HEADER_HEIGHT,                       COL_DARKGREY)
 
-		itemDef
-		{
-		    name                packOverdrive
-			text				Overdrive
-			type				1
-			rect				48 88 48 22
-			textalign			ITEM_ALIGN_CENTER
-			textalignx			24
-			textaligny			1
-			font				4
-			textscale			1
-			forecolor			0.5 0 1 1
-			visible				1
-			action
-			{
-				play			"sound/interface/button1.wav" ;
-				exec			"cmd pack overdrive" ;
-				uiScript		closeingame
-			}
-		}
+        //LOWER BACKGROUND
+        ITEM_BACKGROUND(background_rest,    topbar, 0 HEADER_HEIGHT MENU_WIDTH HEADER_HEIGHT_REMAINING, COL_LIGHTGREY)
+
+        //HEADER TITLE
+        TEXT_BOX_HEADER(playerconfigtitle, topbar, 0 0 HEADER_TAB_WIDTH HEADER_HEIGHT_HALF, VISIBLE, HEADER_TITLE)
+
+        // Exit Menu Button
+        ITEM_EXIT(playerconfigtitle, topbar, HEADER_EXIT_ICON_X HEADER_PADDING HEADER_EXIT_ICON_SIZE HEADER_EXIT_ICON_SIZE, COL_WHITE, HEADER_EXIT_ICON_SHADER)
+
+        //TOP ROW TABS
+        ITEM_BUTTON(toprow_videobutton,     topbar, HEADER_OPTIONS_TAB_1_TEXT,  HEADER_OPTIONS_TAB_1_X HEADER_HEIGHT_HALF HEADER_OPTIONS_TAB_WIDTH HEADER_HEIGHT_HALF,      HEADER_OPTIONS_TAB_WIDTH_HALF,  HEADER_OPTIONS_TAB_1_DESC_TEXT, tribes_video1,      subtab1 show tribes_video_1,     VISIBLE)
+        ITEM_BUTTON(toprow_audiobutton,     topbar, HEADER_OPTIONS_TAB_2_TEXT,  HEADER_OPTIONS_TAB_2_X HEADER_HEIGHT_HALF HEADER_OPTIONS_TAB_WIDTH HEADER_HEIGHT_HALF,      HEADER_OPTIONS_TAB_WIDTH_HALF,  HEADER_OPTIONS_TAB_2_DESC_TEXT, tribes_audio,       subtab2 show tribes_audio_1,     VISIBLE)
+        ITEM_BUTTON(toprow_controlsbutton,  topbar, HEADER_OPTIONS_TAB_3_TEXT,  HEADER_OPTIONS_TAB_3_X HEADER_HEIGHT_HALF HEADER_OPTIONS_TAB_WIDTH HEADER_HEIGHT_HALF,      HEADER_OPTIONS_TAB_WIDTH_HALF,  HEADER_OPTIONS_TAB_3_DESC_TEXT, tribes_controls,    subtab3 show tribes_controls_1,  VISIBLE)
+        ITEM_BUTTON(toprow_gamebutton,      topbar, HEADER_OPTIONS_TAB_4_TEXT,  HEADER_OPTIONS_TAB_4_X HEADER_HEIGHT_HALF HEADER_OPTIONS_TAB_WIDTH HEADER_HEIGHT_HALF,      HEADER_OPTIONS_TAB_WIDTH_HALF,  HEADER_OPTIONS_TAB_4_DESC_TEXT, tribes_game,        subtab4 show tribes_game_1,      VISIBLE)
+
+        //SUBMENU 1 TABS
+        ITEM_BUTTON(subtab1_button1,        subtab1, SUB_TAB_1_TEXT_1,          SUB_TAB_1_X_1 HEADER_HEIGHT SUB_TAB_1_WIDTH SUB_TAB_HEIGHT,                                 SUB_TAB_1_HALF_WIDTH,           SUB_TAB_1_DESC_TEXT_1,          tribes_video_1,     subtab1,                        INVISIBLE)
+        ITEM_BUTTON(subtab1_button2,        subtab1, SUB_TAB_1_TEXT_2,          SUB_TAB_1_X_2 HEADER_HEIGHT SUB_TAB_1_WIDTH SUB_TAB_HEIGHT,                                 SUB_TAB_1_HALF_WIDTH,           SUB_TAB_1_DESC_TEXT_2,          tribes_video_2,     subtab1,                        INVISIBLE)
+        ITEM_BUTTON(subtab1_button3,        subtab1, SUB_TAB_1_TEXT_3,          SUB_TAB_1_X_3 HEADER_HEIGHT SUB_TAB_1_WIDTH SUB_TAB_HEIGHT,                                 SUB_TAB_1_HALF_WIDTH,           SUB_TAB_1_DESC_TEXT_3,          tribes_video_3,     subtab1,                        INVISIBLE)
+        ITEM_BUTTON(subtab1_button4,        subtab1, SUB_TAB_1_TEXT_4,          SUB_TAB_1_X_4 HEADER_HEIGHT SUB_TAB_1_WIDTH SUB_TAB_HEIGHT,                                 SUB_TAB_1_HALF_WIDTH,           SUB_TAB_1_DESC_TEXT_4,          tribes_video_4,     subtab1,                        INVISIBLE)
+
+        //SUBMENU 2 TABS
+        ITEM_BUTTON(subtab2_button1,        subtab2, SUB_TAB_2_TEXT_1,          SUB_TAB_2_X_1 HEADER_HEIGHT SUB_TAB_2_WIDTH SUB_TAB_HEIGHT,                                 SUB_TAB_2_HALF_WIDTH,           SUB_TAB_2_DESC_TEXT_1,          tribes_audio_1,     subtab2,                        INVISIBLE)
+        ITEM_BUTTON(subtab2_button2,        subtab2, SUB_TAB_2_TEXT_2,          SUB_TAB_2_X_2 HEADER_HEIGHT SUB_TAB_2_WIDTH SUB_TAB_HEIGHT,                                 SUB_TAB_2_HALF_WIDTH,           SUB_TAB_2_DESC_TEXT_2,          tribes_audio_2,     subtab2,                        INVISIBLE)
+
+        //SUBMENU 3 TABS
+        ITEM_BUTTON(subtab3_button1,        subtab3, SUB_TAB_3_TEXT_1,          SUB_TAB_3_X_1 HEADER_HEIGHT SUB_TAB_3_WIDTH SUB_TAB_HEIGHT,                                 SUB_TAB_3_HALF_WIDTH,           SUB_TAB_3_DESC_TEXT_1,          tribes_controls_1,  subtab3,                        INVISIBLE)
+        ITEM_BUTTON(subtab3_button2,        subtab3, SUB_TAB_3_TEXT_2,          SUB_TAB_3_X_2 HEADER_HEIGHT SUB_TAB_3_WIDTH SUB_TAB_HEIGHT,                                 SUB_TAB_3_HALF_WIDTH,           SUB_TAB_3_DESC_TEXT_2,          tribes_controls_2,  subtab3,                        INVISIBLE)
+        ITEM_BUTTON(subtab3_button3,        subtab3, SUB_TAB_3_TEXT_3,          SUB_TAB_3_X_3 HEADER_HEIGHT SUB_TAB_3_WIDTH SUB_TAB_HEIGHT,                                 SUB_TAB_3_HALF_WIDTH,           SUB_TAB_3_DESC_TEXT_3,          tribes_controls_3,  subtab3,                        INVISIBLE)
+        ITEM_BUTTON(subtab3_button4,        subtab3, SUB_TAB_3_TEXT_4,          SUB_TAB_3_X_4 HEADER_HEIGHT SUB_TAB_3_WIDTH SUB_TAB_HEIGHT,                                 SUB_TAB_3_HALF_WIDTH,           SUB_TAB_3_DESC_TEXT_4,          tribes_controls_4,  subtab3,                        INVISIBLE)
+        ITEM_BUTTON(subtab3_button5,        subtab3, SUB_TAB_3_TEXT_5,          SUB_TAB_3_X_5 HEADER_HEIGHT SUB_TAB_3_WIDTH SUB_TAB_HEIGHT,                                 SUB_TAB_3_HALF_WIDTH,           SUB_TAB_3_DESC_TEXT_5,          tribes_controls_5,  subtab3,                        INVISIBLE)
+
+        //SUBMENU 4 TABS
+        ITEM_BUTTON(subtab4_button1,        subtab4, SUB_TAB_4_TEXT_1,          SUB_TAB_4_X_1 HEADER_HEIGHT SUB_TAB_4_WIDTH SUB_TAB_HEIGHT,                                 SUB_TAB_4_HALF_WIDTH,           SUB_TAB_4_DESC_TEXT_1,          tribes_game_1,      subtab4,                        INVISIBLE)
+        ITEM_BUTTON(subtab4_button2,        subtab4, SUB_TAB_4_TEXT_2,          SUB_TAB_4_X_2 HEADER_HEIGHT SUB_TAB_4_WIDTH SUB_TAB_HEIGHT,                                 SUB_TAB_4_HALF_WIDTH,           SUB_TAB_4_DESC_TEXT_2,          tribes_game_2,      subtab4,                        INVISIBLE)
+        ITEM_BUTTON(subtab4_button3,        subtab4, SUB_TAB_4_TEXT_3,          SUB_TAB_4_X_3 HEADER_HEIGHT SUB_TAB_4_WIDTH SUB_TAB_HEIGHT,                                 SUB_TAB_4_HALF_WIDTH,           SUB_TAB_4_DESC_TEXT_3,          tribes_game_3,      subtab4,                        INVISIBLE)
+        ITEM_BUTTON(subtab4_button4,        subtab4, SUB_TAB_4_TEXT_4,          SUB_TAB_4_X_4 HEADER_HEIGHT SUB_TAB_4_WIDTH SUB_TAB_HEIGHT,                                 SUB_TAB_4_HALF_WIDTH,           SUB_TAB_4_DESC_TEXT_4,          tribes_game_4,      subtab4,                        INVISIBLE)
+
+        //SUBMENU OPTIONS
+
+        // VIDEO OPTIONS
+        //VIDEO SUBMENU1
+        //1
+        ITEM_BODY_MULTI(        videooption1_1, tribes_video_1, SUB_OPTION1_Y, "Video SUBTAB1 Option 1", "Select an option",                    "cv_someCvar",      { "Option1"; "option1"; "Option2"; "option2"; "Option 3"; "option3" })
+        //2
+        ITEM_BODY_NUMERIC(      videooption1_2, tribes_video_1, SUB_OPTION2_Y, "Video SUBTAB1 Option 2", "Enter a numeric Value",               "cv_someOtherCvar")
+        //3
+        ITEM_BODY_SLIDERFL(     videooption1_3, tribes_video_1, SUB_OPTION3_Y, "Video SUBTAB1 Option 3", "Float Slider description text",       "cv_someFloat"      1 0.0 1.0)
+        //4
+        ITEM_BODY_SLIDERINT(    videooption1_4, tribes_video_1, SUB_OPTION4_Y, "Video SUBTAB1 Option 4", "Int Slider description text",         "cv_someInt"        1 0 3)
+        //5
+        ITEM_BODY_CHECKBOX(     videooption1_5, tribes_video_1, SUB_OPTION5_Y, "Video SUBTAB1 Option 5", "Some bitmask option.",                "cg_someBitMask",   2)
+        //6
+        ITEM_BODY_YESNO(        videooption1_6, tribes_video_1, SUB_OPTION6_Y, "Video SUBTAB1 Option 6", "YesNo Description Text",              "cv_someBool")
+        //7
+        ITEM_BODY_EDITFIELD(    videooption1_7, tribes_video_1, SUB_OPTION7_Y, "Video SUBTAB1 Option 7", "Editfield Text",                      "cv_someString",    MAX_CHARS)
+        //8
+        ITEM_BODY_BIND(         videooption1_8, tribes_video_1, SUB_OPTION8_Y, "Video SUBTAB1 Option 8", "Bind Text",                           "+attack")
+
+
+        TEXT_BOX_BODY(videooption1_9,      tribes_video_1,       0 SUB_OPTION9_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB1 Option 9")
+        TEXT_BOX_BODY(videooption1_10,     tribes_video_1,       0 SUB_OPTION10_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB1 Option 10")
+        TEXT_BOX_BODY(videooption1_11,     tribes_video_1,       0 SUB_OPTION11_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB1 Option 11")
+        TEXT_BOX_BODY(videooption1_12,     tribes_video_1,       0 SUB_OPTION12_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB1 Option 12")
+        TEXT_BOX_BODY(videooption1_13,     tribes_video_1,       0 SUB_OPTION13_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB1 Option 13")
+        TEXT_BOX_BODY(videooption1_14,     tribes_video_1,       0 SUB_OPTION14_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB1 Option 14")
+        TEXT_BOX_BODY(videooption1_15,     tribes_video_1,       0 SUB_OPTION15_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB1 Option 15")
+        TEXT_BOX_BODY(videooption1_16,     tribes_video_1,       0 SUB_OPTION16_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB1 Option 16")
+        TEXT_BOX_BODY(videooption1_17,     tribes_video_1,       0 SUB_OPTION17_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB1 Option 17")
+        TEXT_BOX_BODY(videooption1_18,     tribes_video_1,       0 SUB_OPTION18_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB1 Option 18")
+        TEXT_BOX_BODY(videooption1_19,     tribes_video_1,       0 SUB_OPTION19_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB1 Option 19")
+        TEXT_BOX_BODY(videooption1_20,     tribes_video_1,       0 SUB_OPTION20_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB1 Option 20")
+        TEXT_BOX_BODY(videooption1_21,     tribes_video_1,       0 SUB_OPTION21_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB1 Option 21")
+        TEXT_BOX_BODY(videooption1_22,     tribes_video_1,       0 SUB_OPTION22_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB1 Option 22")
+        TEXT_BOX_BODY(videooption1_23,     tribes_video_1,       0 SUB_OPTION23_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB1 Option 23")
+        TEXT_BOX_BODY(videooption1_24,     tribes_video_1,       0 SUB_OPTION24_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB1 Option 24")
+
+        //VIDEO SUBMENU2
+        TEXT_BOX_BODY(videooption2_1,      tribes_video_2,       0 SUB_OPTION1_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB2 Option 1")
+        TEXT_BOX_BODY(videooption2_2,      tribes_video_2,       0 SUB_OPTION2_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB2 Option 2")
+        TEXT_BOX_BODY(videooption2_3,      tribes_video_2,       0 SUB_OPTION3_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB2 Option 3")
+        TEXT_BOX_BODY(videooption2_4,      tribes_video_2,       0 SUB_OPTION4_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB2 Option 4")
+        TEXT_BOX_BODY(videooption2_5,      tribes_video_2,       0 SUB_OPTION5_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB2 Option 5")
+        TEXT_BOX_BODY(videooption2_6,      tribes_video_2,       0 SUB_OPTION6_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB2 Option 6")
+        TEXT_BOX_BODY(videooption2_7,      tribes_video_2,       0 SUB_OPTION7_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB2 Option 7")
+        TEXT_BOX_BODY(videooption2_8,      tribes_video_2,       0 SUB_OPTION8_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB2 Option 8")
+        TEXT_BOX_BODY(videooption2_9,      tribes_video_2,       0 SUB_OPTION9_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB2 Option 9")
+        TEXT_BOX_BODY(videooption2_10,     tribes_video_2,       0 SUB_OPTION10_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB2 Option 10")
+        TEXT_BOX_BODY(videooption2_11,     tribes_video_2,       0 SUB_OPTION11_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB2 Option 11")
+        TEXT_BOX_BODY(videooption2_12,     tribes_video_2,       0 SUB_OPTION12_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB2 Option 12")
+        TEXT_BOX_BODY(videooption2_13,     tribes_video_2,       0 SUB_OPTION13_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB2 Option 13")
+        TEXT_BOX_BODY(videooption2_14,     tribes_video_2,       0 SUB_OPTION14_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB2 Option 14")
+        TEXT_BOX_BODY(videooption2_15,     tribes_video_2,       0 SUB_OPTION15_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB2 Option 15")
+        TEXT_BOX_BODY(videooption2_16,     tribes_video_2,       0 SUB_OPTION16_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB2 Option 16")
+        TEXT_BOX_BODY(videooption2_17,     tribes_video_2,       0 SUB_OPTION17_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB2 Option 17")
+        TEXT_BOX_BODY(videooption2_18,     tribes_video_2,       0 SUB_OPTION18_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB2 Option 18")
+        TEXT_BOX_BODY(videooption2_19,     tribes_video_2,       0 SUB_OPTION19_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB2 Option 19")
+        TEXT_BOX_BODY(videooption2_20,     tribes_video_2,       0 SUB_OPTION20_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB2 Option 20")
+        TEXT_BOX_BODY(videooption2_21,     tribes_video_2,       0 SUB_OPTION21_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB2 Option 21")
+        TEXT_BOX_BODY(videooption2_22,     tribes_video_2,       0 SUB_OPTION22_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB2 Option 22")
+        TEXT_BOX_BODY(videooption2_23,     tribes_video_2,       0 SUB_OPTION23_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB2 Option 23")
+        TEXT_BOX_BODY(videooption2_24,     tribes_video_2,       0 SUB_OPTION24_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB2 Option 24")
+
+        //VIDEO SUBMENU3
+        TEXT_BOX_BODY(videooption3_1,      tribes_video_3,       0 SUB_OPTION1_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB3 Option 1")
+        TEXT_BOX_BODY(videooption3_2,      tribes_video_3,       0 SUB_OPTION2_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB3 Option 2")
+        TEXT_BOX_BODY(videooption3_3,      tribes_video_3,       0 SUB_OPTION3_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB3 Option 3")
+        TEXT_BOX_BODY(videooption3_4,      tribes_video_3,       0 SUB_OPTION4_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB3 Option 4")
+        TEXT_BOX_BODY(videooption3_5,      tribes_video_3,       0 SUB_OPTION5_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB3 Option 5")
+        TEXT_BOX_BODY(videooption3_6,      tribes_video_3,       0 SUB_OPTION6_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB3 Option 6")
+        TEXT_BOX_BODY(videooption3_7,      tribes_video_3,       0 SUB_OPTION7_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB3 Option 7")
+        TEXT_BOX_BODY(videooption3_8,      tribes_video_3,       0 SUB_OPTION8_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB3 Option 8")
+        TEXT_BOX_BODY(videooption3_9,      tribes_video_3,       0 SUB_OPTION9_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB3 Option 9")
+        TEXT_BOX_BODY(videooption3_10,     tribes_video_3,       0 SUB_OPTION10_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB3 Option 10")
+        TEXT_BOX_BODY(videooption3_11,     tribes_video_3,       0 SUB_OPTION11_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB3 Option 11")
+        TEXT_BOX_BODY(videooption3_12,     tribes_video_3,       0 SUB_OPTION12_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB3 Option 12")
+        TEXT_BOX_BODY(videooption3_13,     tribes_video_3,       0 SUB_OPTION13_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB3 Option 13")
+        TEXT_BOX_BODY(videooption3_14,     tribes_video_3,       0 SUB_OPTION14_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB3 Option 14")
+        TEXT_BOX_BODY(videooption3_15,     tribes_video_3,       0 SUB_OPTION15_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB3 Option 15")
+        TEXT_BOX_BODY(videooption3_16,     tribes_video_3,       0 SUB_OPTION16_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB3 Option 16")
+        TEXT_BOX_BODY(videooption3_17,     tribes_video_3,       0 SUB_OPTION17_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB3 Option 17")
+        TEXT_BOX_BODY(videooption3_18,     tribes_video_3,       0 SUB_OPTION18_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB3 Option 18")
+        TEXT_BOX_BODY(videooption3_19,     tribes_video_3,       0 SUB_OPTION19_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB3 Option 19")
+        TEXT_BOX_BODY(videooption3_20,     tribes_video_3,       0 SUB_OPTION20_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB3 Option 20")
+        TEXT_BOX_BODY(videooption3_21,     tribes_video_3,       0 SUB_OPTION21_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB3 Option 21")
+        TEXT_BOX_BODY(videooption3_22,     tribes_video_3,       0 SUB_OPTION22_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB3 Option 22")
+        TEXT_BOX_BODY(videooption3_23,     tribes_video_3,       0 SUB_OPTION23_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB3 Option 23")
+        TEXT_BOX_BODY(videooption3_24,     tribes_video_3,       0 SUB_OPTION24_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB3 Option 24")
+
+        //VIDEO SUBMENU4
+        TEXT_BOX_BODY(videooption4_1,      tribes_video_4,       0 SUB_OPTION1_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB4 Option 1")
+        TEXT_BOX_BODY(videooption4_2,      tribes_video_4,       0 SUB_OPTION2_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB4 Option 2")
+        TEXT_BOX_BODY(videooption4_3,      tribes_video_4,       0 SUB_OPTION3_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB4 Option 3")
+        TEXT_BOX_BODY(videooption4_4,      tribes_video_4,       0 SUB_OPTION4_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB4 Option 4")
+        TEXT_BOX_BODY(videooption4_5,      tribes_video_4,       0 SUB_OPTION5_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB4 Option 5")
+        TEXT_BOX_BODY(videooption4_6,      tribes_video_4,       0 SUB_OPTION6_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB4 Option 6")
+        TEXT_BOX_BODY(videooption4_7,      tribes_video_4,       0 SUB_OPTION7_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB4 Option 7")
+        TEXT_BOX_BODY(videooption4_8,      tribes_video_4,       0 SUB_OPTION8_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB4 Option 8")
+        TEXT_BOX_BODY(videooption4_9,      tribes_video_4,       0 SUB_OPTION9_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB4 Option 9")
+        TEXT_BOX_BODY(videooption4_10,     tribes_video_4,       0 SUB_OPTION10_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB4 Option 10")
+        TEXT_BOX_BODY(videooption4_11,     tribes_video_4,       0 SUB_OPTION11_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB4 Option 11")
+        TEXT_BOX_BODY(videooption4_12,     tribes_video_4,       0 SUB_OPTION12_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB4 Option 12")
+        TEXT_BOX_BODY(videooption4_13,     tribes_video_4,       0 SUB_OPTION13_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB4 Option 13")
+        TEXT_BOX_BODY(videooption4_14,     tribes_video_4,       0 SUB_OPTION14_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB4 Option 14")
+        TEXT_BOX_BODY(videooption4_15,     tribes_video_4,       0 SUB_OPTION15_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB4 Option 15")
+        TEXT_BOX_BODY(videooption4_16,     tribes_video_4,       0 SUB_OPTION16_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB4 Option 16")
+        TEXT_BOX_BODY(videooption4_17,     tribes_video_4,       0 SUB_OPTION17_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB4 Option 17")
+        TEXT_BOX_BODY(videooption4_18,     tribes_video_4,       0 SUB_OPTION18_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB4 Option 18")
+        TEXT_BOX_BODY(videooption4_19,     tribes_video_4,       0 SUB_OPTION19_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB4 Option 19")
+        TEXT_BOX_BODY(videooption4_20,     tribes_video_4,       0 SUB_OPTION20_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB4 Option 20")
+        TEXT_BOX_BODY(videooption4_21,     tribes_video_4,       0 SUB_OPTION21_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB4 Option 21")
+        TEXT_BOX_BODY(videooption4_22,     tribes_video_4,       0 SUB_OPTION22_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB4 Option 22")
+        TEXT_BOX_BODY(videooption4_23,     tribes_video_4,       0 SUB_OPTION23_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB4 Option 23")
+        TEXT_BOX_BODY(videooption4_24,     tribes_video_4,       0 SUB_OPTION24_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Video SUBTAB4 Option 24")
+
+        //AUDIO OPTIONS
+        //AUDIO SUBMENU1
+        TEXT_BOX_BODY(audiooption1_1,      tribes_audio_1,       0 SUB_OPTION1_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB1 Option 1")
+        TEXT_BOX_BODY(audiooption1_2,      tribes_audio_1,       0 SUB_OPTION2_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB1 Option 2")
+        TEXT_BOX_BODY(audiooption1_3,      tribes_audio_1,       0 SUB_OPTION3_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB1 Option 3")
+        TEXT_BOX_BODY(audiooption1_4,      tribes_audio_1,       0 SUB_OPTION4_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB1 Option 4")
+        TEXT_BOX_BODY(audiooption1_5,      tribes_audio_1,       0 SUB_OPTION5_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB1 Option 5")
+        TEXT_BOX_BODY(audiooption1_6,      tribes_audio_1,       0 SUB_OPTION6_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB1 Option 6")
+        TEXT_BOX_BODY(audiooption1_7,      tribes_audio_1,       0 SUB_OPTION7_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB1 Option 7")
+        TEXT_BOX_BODY(audiooption1_8,      tribes_audio_1,       0 SUB_OPTION8_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB1 Option 8")
+        TEXT_BOX_BODY(audiooption1_9,      tribes_audio_1,       0 SUB_OPTION9_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB1 Option 9")
+        TEXT_BOX_BODY(audiooption1_10,     tribes_audio_1,       0 SUB_OPTION10_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB1 Option 10")
+        TEXT_BOX_BODY(audiooption1_11,     tribes_audio_1,       0 SUB_OPTION11_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB1 Option 11")
+        TEXT_BOX_BODY(audiooption1_12,     tribes_audio_1,       0 SUB_OPTION12_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB1 Option 12")
+        TEXT_BOX_BODY(audiooption1_13,     tribes_audio_1,       0 SUB_OPTION13_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB1 Option 13")
+        TEXT_BOX_BODY(audiooption1_14,     tribes_audio_1,       0 SUB_OPTION14_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB1 Option 14")
+        TEXT_BOX_BODY(audiooption1_15,     tribes_audio_1,       0 SUB_OPTION15_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB1 Option 15")
+        TEXT_BOX_BODY(audiooption1_16,     tribes_audio_1,       0 SUB_OPTION16_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB1 Option 16")
+        TEXT_BOX_BODY(audiooption1_17,     tribes_audio_1,       0 SUB_OPTION17_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB1 Option 17")
+        TEXT_BOX_BODY(audiooption1_18,     tribes_audio_1,       0 SUB_OPTION18_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB1 Option 18")
+        TEXT_BOX_BODY(audiooption1_19,     tribes_audio_1,       0 SUB_OPTION19_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB1 Option 19")
+        TEXT_BOX_BODY(audiooption1_20,     tribes_audio_1,       0 SUB_OPTION20_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB1 Option 20")
+        TEXT_BOX_BODY(audiooption1_21,     tribes_audio_1,       0 SUB_OPTION21_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB1 Option 21")
+        TEXT_BOX_BODY(audiooption1_22,     tribes_audio_1,       0 SUB_OPTION22_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB1 Option 22")
+        TEXT_BOX_BODY(audiooption1_23,     tribes_audio_1,       0 SUB_OPTION23_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB1 Option 23")
+        TEXT_BOX_BODY(audiooption1_24,     tribes_audio_1,       0 SUB_OPTION24_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB1 Option 24")
+
+        //AUDIO SUBMENU2
+        TEXT_BOX_BODY(audiooption2_1,      tribes_audio_2,       0 SUB_OPTION1_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB2 Option 1")
+        TEXT_BOX_BODY(audiooption2_2,      tribes_audio_2,       0 SUB_OPTION2_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB2 Option 2")
+        TEXT_BOX_BODY(audiooption2_3,      tribes_audio_2,       0 SUB_OPTION3_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB2 Option 3")
+        TEXT_BOX_BODY(audiooption2_4,      tribes_audio_2,       0 SUB_OPTION4_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB2 Option 4")
+        TEXT_BOX_BODY(audiooption2_5,      tribes_audio_2,       0 SUB_OPTION5_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB2 Option 5")
+        TEXT_BOX_BODY(audiooption2_6,      tribes_audio_2,       0 SUB_OPTION6_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB2 Option 6")
+        TEXT_BOX_BODY(audiooption2_7,      tribes_audio_2,       0 SUB_OPTION7_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB2 Option 7")
+        TEXT_BOX_BODY(audiooption2_8,      tribes_audio_2,       0 SUB_OPTION8_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB2 Option 8")
+        TEXT_BOX_BODY(audiooption2_9,      tribes_audio_2,       0 SUB_OPTION9_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB2 Option 9")
+        TEXT_BOX_BODY(audiooption2_10,     tribes_audio_2,       0 SUB_OPTION10_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB2 Option 10")
+        TEXT_BOX_BODY(audiooption2_11,     tribes_audio_2,       0 SUB_OPTION11_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB2 Option 11")
+        TEXT_BOX_BODY(audiooption2_12,     tribes_audio_2,       0 SUB_OPTION12_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB2 Option 12")
+        TEXT_BOX_BODY(audiooption2_13,     tribes_audio_2,       0 SUB_OPTION13_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB2 Option 13")
+        TEXT_BOX_BODY(audiooption2_14,     tribes_audio_2,       0 SUB_OPTION14_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB2 Option 14")
+        TEXT_BOX_BODY(audiooption2_15,     tribes_audio_2,       0 SUB_OPTION15_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB2 Option 15")
+        TEXT_BOX_BODY(audiooption2_16,     tribes_audio_2,       0 SUB_OPTION16_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB2 Option 16")
+        TEXT_BOX_BODY(audiooption2_17,     tribes_audio_2,       0 SUB_OPTION17_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB2 Option 17")
+        TEXT_BOX_BODY(audiooption2_18,     tribes_audio_2,       0 SUB_OPTION18_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB2 Option 18")
+        TEXT_BOX_BODY(audiooption2_19,     tribes_audio_2,       0 SUB_OPTION19_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB2 Option 19")
+        TEXT_BOX_BODY(audiooption2_20,     tribes_audio_2,       0 SUB_OPTION20_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB2 Option 20")
+        TEXT_BOX_BODY(audiooption2_21,     tribes_audio_2,       0 SUB_OPTION21_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB2 Option 21")
+        TEXT_BOX_BODY(audiooption2_22,     tribes_audio_2,       0 SUB_OPTION22_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB2 Option 22")
+        TEXT_BOX_BODY(audiooption2_23,     tribes_audio_2,       0 SUB_OPTION23_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB2 Option 23")
+        TEXT_BOX_BODY(audiooption2_24,     tribes_audio_2,       0 SUB_OPTION24_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Audio SUBTAB2 Option 24")
+
+        //CONTROLS OPTIONS
+        //CONTROLS SUBMENU1
+        TEXT_BOX_BODY(controlsoption1_1,   tribes_controls_1,    0 SUB_OPTION1_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB1 Option 1")
+        TEXT_BOX_BODY(controlsoption1_2,   tribes_controls_1,    0 SUB_OPTION2_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB1 Option 2")
+        TEXT_BOX_BODY(controlsoption1_3,   tribes_controls_1,    0 SUB_OPTION3_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB1 Option 3")
+        TEXT_BOX_BODY(controlsoption1_4,   tribes_controls_1,    0 SUB_OPTION4_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB1 Option 4")
+        TEXT_BOX_BODY(controlsoption1_5,   tribes_controls_1,    0 SUB_OPTION5_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB1 Option 5")
+        TEXT_BOX_BODY(controlsoption1_6,   tribes_controls_1,    0 SUB_OPTION6_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB1 Option 6")
+        TEXT_BOX_BODY(controlsoption1_7,   tribes_controls_1,    0 SUB_OPTION7_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB1 Option 7")
+        TEXT_BOX_BODY(controlsoption1_8,   tribes_controls_1,    0 SUB_OPTION8_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB1 Option 8")
+        TEXT_BOX_BODY(controlsoption1_9,   tribes_controls_1,    0 SUB_OPTION9_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB1 Option 9")
+        TEXT_BOX_BODY(controlsoption1_10,  tribes_controls_1,    0 SUB_OPTION10_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB1 Option 10")
+        TEXT_BOX_BODY(controlsoption1_11,  tribes_controls_1,    0 SUB_OPTION11_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB1 Option 11")
+        TEXT_BOX_BODY(controlsoption1_12,  tribes_controls_1,    0 SUB_OPTION12_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB1 Option 12")
+        TEXT_BOX_BODY(controlsoption1_13,  tribes_controls_1,    0 SUB_OPTION13_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB1 Option 13")
+        TEXT_BOX_BODY(controlsoption1_14,  tribes_controls_1,    0 SUB_OPTION14_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB1 Option 14")
+        TEXT_BOX_BODY(controlsoption1_15,  tribes_controls_1,    0 SUB_OPTION15_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB1 Option 15")
+        TEXT_BOX_BODY(controlsoption1_16,  tribes_controls_1,    0 SUB_OPTION16_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB1 Option 16")
+        TEXT_BOX_BODY(controlsoption1_17,  tribes_controls_1,    0 SUB_OPTION17_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB1 Option 17")
+        TEXT_BOX_BODY(controlsoption1_18,  tribes_controls_1,    0 SUB_OPTION18_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB1 Option 18")
+        TEXT_BOX_BODY(controlsoption1_19,  tribes_controls_1,    0 SUB_OPTION19_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB1 Option 19")
+        TEXT_BOX_BODY(controlsoption1_20,  tribes_controls_1,    0 SUB_OPTION20_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB1 Option 20")
+        TEXT_BOX_BODY(controlsoption1_21,  tribes_controls_1,    0 SUB_OPTION21_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB1 Option 21")
+        TEXT_BOX_BODY(controlsoption1_22,  tribes_controls_1,    0 SUB_OPTION22_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB1 Option 22")
+        TEXT_BOX_BODY(controlsoption1_23,  tribes_controls_1,    0 SUB_OPTION23_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB1 Option 23")
+        TEXT_BOX_BODY(controlsoption1_24,  tribes_controls_1,    0 SUB_OPTION24_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB1 Option 24")
+
+        //CONTROLS SUBMENU2
+        TEXT_BOX_BODY(controlsoption2_1,   tribes_controls_2,    0 SUB_OPTION1_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB2 Option 1")
+        TEXT_BOX_BODY(controlsoption2_2,   tribes_controls_2,    0 SUB_OPTION2_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB2 Option 2")
+        TEXT_BOX_BODY(controlsoption2_3,   tribes_controls_2,    0 SUB_OPTION3_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB2 Option 3")
+        TEXT_BOX_BODY(controlsoption2_4,   tribes_controls_2,    0 SUB_OPTION4_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB2 Option 4")
+        TEXT_BOX_BODY(controlsoption2_5,   tribes_controls_2,    0 SUB_OPTION5_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB2 Option 5")
+        TEXT_BOX_BODY(controlsoption2_6,   tribes_controls_2,    0 SUB_OPTION6_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB2 Option 6")
+        TEXT_BOX_BODY(controlsoption2_7,   tribes_controls_2,    0 SUB_OPTION7_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB2 Option 7")
+        TEXT_BOX_BODY(controlsoption2_8,   tribes_controls_2,    0 SUB_OPTION8_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB2 Option 8")
+        TEXT_BOX_BODY(controlsoption2_9,   tribes_controls_2,    0 SUB_OPTION9_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB2 Option 9")
+        TEXT_BOX_BODY(controlsoption2_10,  tribes_controls_2,    0 SUB_OPTION10_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB2 Option 10")
+        TEXT_BOX_BODY(controlsoption2_11,  tribes_controls_2,    0 SUB_OPTION11_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB2 Option 11")
+        TEXT_BOX_BODY(controlsoption2_12,  tribes_controls_2,    0 SUB_OPTION12_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB2 Option 12")
+        TEXT_BOX_BODY(controlsoption2_13,  tribes_controls_2,    0 SUB_OPTION13_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB2 Option 13")
+        TEXT_BOX_BODY(controlsoption2_14,  tribes_controls_2,    0 SUB_OPTION14_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB2 Option 14")
+        TEXT_BOX_BODY(controlsoption2_15,  tribes_controls_2,    0 SUB_OPTION15_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB2 Option 15")
+        TEXT_BOX_BODY(controlsoption2_16,  tribes_controls_2,    0 SUB_OPTION16_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB2 Option 16")
+        TEXT_BOX_BODY(controlsoption2_17,  tribes_controls_2,    0 SUB_OPTION17_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB2 Option 17")
+        TEXT_BOX_BODY(controlsoption2_18,  tribes_controls_2,    0 SUB_OPTION18_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB2 Option 18")
+        TEXT_BOX_BODY(controlsoption2_19,  tribes_controls_2,    0 SUB_OPTION19_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB2 Option 19")
+        TEXT_BOX_BODY(controlsoption2_20,  tribes_controls_2,    0 SUB_OPTION20_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB2 Option 20")
+        TEXT_BOX_BODY(controlsoption2_21,  tribes_controls_2,    0 SUB_OPTION21_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB2 Option 21")
+        TEXT_BOX_BODY(controlsoption2_22,  tribes_controls_2,    0 SUB_OPTION22_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB2 Option 22")
+        TEXT_BOX_BODY(controlsoption2_23,  tribes_controls_2,    0 SUB_OPTION23_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB2 Option 23")
+        TEXT_BOX_BODY(controlsoption2_24,  tribes_controls_2,    0 SUB_OPTION24_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB2 Option 24")
+
+        //CONTROLS SUBMENU3
+        TEXT_BOX_BODY(controlsoption3_1,   tribes_controls_3,    0 SUB_OPTION1_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB3 Option 1")
+        TEXT_BOX_BODY(controlsoption3_2,   tribes_controls_3,    0 SUB_OPTION2_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB3 Option 2")
+        TEXT_BOX_BODY(controlsoption3_3,   tribes_controls_3,    0 SUB_OPTION3_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB3 Option 3")
+        TEXT_BOX_BODY(controlsoption3_4,   tribes_controls_3,    0 SUB_OPTION4_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB3 Option 4")
+        TEXT_BOX_BODY(controlsoption3_5,   tribes_controls_3,    0 SUB_OPTION5_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB3 Option 5")
+        TEXT_BOX_BODY(controlsoption3_6,   tribes_controls_3,    0 SUB_OPTION6_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB3 Option 6")
+        TEXT_BOX_BODY(controlsoption3_7,   tribes_controls_3,    0 SUB_OPTION7_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB3 Option 7")
+        TEXT_BOX_BODY(controlsoption3_8,   tribes_controls_3,    0 SUB_OPTION8_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB3 Option 8")
+        TEXT_BOX_BODY(controlsoption3_9,   tribes_controls_3,    0 SUB_OPTION9_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB3 Option 9")
+        TEXT_BOX_BODY(controlsoption3_10,  tribes_controls_3,    0 SUB_OPTION10_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB3 Option 10")
+        TEXT_BOX_BODY(controlsoption3_11,  tribes_controls_3,    0 SUB_OPTION11_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB3 Option 11")
+        TEXT_BOX_BODY(controlsoption3_12,  tribes_controls_3,    0 SUB_OPTION12_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB3 Option 12")
+        TEXT_BOX_BODY(controlsoption3_13,  tribes_controls_3,    0 SUB_OPTION13_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB3 Option 13")
+        TEXT_BOX_BODY(controlsoption3_14,  tribes_controls_3,    0 SUB_OPTION14_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB3 Option 14")
+        TEXT_BOX_BODY(controlsoption3_15,  tribes_controls_3,    0 SUB_OPTION15_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB3 Option 15")
+        TEXT_BOX_BODY(controlsoption3_16,  tribes_controls_3,    0 SUB_OPTION16_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB3 Option 16")
+        TEXT_BOX_BODY(controlsoption3_17,  tribes_controls_3,    0 SUB_OPTION17_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB3 Option 17")
+        TEXT_BOX_BODY(controlsoption3_18,  tribes_controls_3,    0 SUB_OPTION18_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB3 Option 18")
+        TEXT_BOX_BODY(controlsoption3_19,  tribes_controls_3,    0 SUB_OPTION19_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB3 Option 19")
+        TEXT_BOX_BODY(controlsoption3_20,  tribes_controls_3,    0 SUB_OPTION20_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB3 Option 20")
+        TEXT_BOX_BODY(controlsoption3_21,  tribes_controls_3,    0 SUB_OPTION21_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB3 Option 21")
+        TEXT_BOX_BODY(controlsoption3_22,  tribes_controls_3,    0 SUB_OPTION22_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB3 Option 22")
+        TEXT_BOX_BODY(controlsoption3_23,  tribes_controls_3,    0 SUB_OPTION23_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB3 Option 23")
+        TEXT_BOX_BODY(controlsoption3_24,  tribes_controls_3,    0 SUB_OPTION24_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB3 Option 24")
+
+        //CONTROLS SUBMENU4
+        TEXT_BOX_BODY(controlsoption4_1,   tribes_controls_4,    0 SUB_OPTION1_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB4 Option 1")
+        TEXT_BOX_BODY(controlsoption4_2,   tribes_controls_4,    0 SUB_OPTION2_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB4 Option 2")
+        TEXT_BOX_BODY(controlsoption4_3,   tribes_controls_4,    0 SUB_OPTION3_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB4 Option 3")
+        TEXT_BOX_BODY(controlsoption4_4,   tribes_controls_4,    0 SUB_OPTION4_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB4 Option 4")
+        TEXT_BOX_BODY(controlsoption4_5,   tribes_controls_4,    0 SUB_OPTION5_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB4 Option 5")
+        TEXT_BOX_BODY(controlsoption4_6,   tribes_controls_4,    0 SUB_OPTION6_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB4 Option 6")
+        TEXT_BOX_BODY(controlsoption4_7,   tribes_controls_4,    0 SUB_OPTION7_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB4 Option 7")
+        TEXT_BOX_BODY(controlsoption4_8,   tribes_controls_4,    0 SUB_OPTION8_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB4 Option 8")
+        TEXT_BOX_BODY(controlsoption4_9,   tribes_controls_4,    0 SUB_OPTION9_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB4 Option 9")
+        TEXT_BOX_BODY(controlsoption4_10,  tribes_controls_4,    0 SUB_OPTION10_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB4 Option 10")
+        TEXT_BOX_BODY(controlsoption4_11,  tribes_controls_4,    0 SUB_OPTION11_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB4 Option 11")
+        TEXT_BOX_BODY(controlsoption4_12,  tribes_controls_4,    0 SUB_OPTION12_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB4 Option 12")
+        TEXT_BOX_BODY(controlsoption4_13,  tribes_controls_4,    0 SUB_OPTION13_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB4 Option 13")
+        TEXT_BOX_BODY(controlsoption4_14,  tribes_controls_4,    0 SUB_OPTION14_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB4 Option 14")
+        TEXT_BOX_BODY(controlsoption4_15,  tribes_controls_4,    0 SUB_OPTION15_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB4 Option 15")
+        TEXT_BOX_BODY(controlsoption4_16,  tribes_controls_4,    0 SUB_OPTION16_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB4 Option 16")
+        TEXT_BOX_BODY(controlsoption4_17,  tribes_controls_4,    0 SUB_OPTION17_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB4 Option 17")
+        TEXT_BOX_BODY(controlsoption4_18,  tribes_controls_4,    0 SUB_OPTION18_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB4 Option 18")
+        TEXT_BOX_BODY(controlsoption4_19,  tribes_controls_4,    0 SUB_OPTION19_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB4 Option 19")
+        TEXT_BOX_BODY(controlsoption4_20,  tribes_controls_4,    0 SUB_OPTION20_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB4 Option 20")
+        TEXT_BOX_BODY(controlsoption4_21,  tribes_controls_4,    0 SUB_OPTION21_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB4 Option 21")
+        TEXT_BOX_BODY(controlsoption4_22,  tribes_controls_4,    0 SUB_OPTION22_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB4 Option 22")
+        TEXT_BOX_BODY(controlsoption4_23,  tribes_controls_4,    0 SUB_OPTION23_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB4 Option 23")
+        TEXT_BOX_BODY(controlsoption4_24,  tribes_controls_4,    0 SUB_OPTION24_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB4 Option 24")
+
+        //CONTROLS SUBMENU5
+        TEXT_BOX_BODY(controlsoption5_1,   tribes_controls_5,    0 SUB_OPTION1_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB5 Option 1")
+        TEXT_BOX_BODY(controlsoption5_2,   tribes_controls_5,    0 SUB_OPTION2_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB5 Option 2")
+        TEXT_BOX_BODY(controlsoption5_3,   tribes_controls_5,    0 SUB_OPTION3_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB5 Option 3")
+        TEXT_BOX_BODY(controlsoption5_4,   tribes_controls_5,    0 SUB_OPTION4_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB5 Option 4")
+        TEXT_BOX_BODY(controlsoption5_5,   tribes_controls_5,    0 SUB_OPTION5_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB5 Option 5")
+        TEXT_BOX_BODY(controlsoption5_6,   tribes_controls_5,    0 SUB_OPTION6_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB5 Option 6")
+        TEXT_BOX_BODY(controlsoption5_7,   tribes_controls_5,    0 SUB_OPTION7_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB5 Option 7")
+        TEXT_BOX_BODY(controlsoption5_8,   tribes_controls_5,    0 SUB_OPTION8_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB5 Option 8")
+        TEXT_BOX_BODY(controlsoption5_9,   tribes_controls_5,    0 SUB_OPTION9_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB5 Option 9")
+        TEXT_BOX_BODY(controlsoption5_10,  tribes_controls_5,    0 SUB_OPTION10_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB5 Option 10")
+        TEXT_BOX_BODY(controlsoption5_11,  tribes_controls_5,    0 SUB_OPTION11_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB5 Option 11")
+        TEXT_BOX_BODY(controlsoption5_12,  tribes_controls_5,    0 SUB_OPTION12_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB5 Option 12")
+        TEXT_BOX_BODY(controlsoption5_13,  tribes_controls_5,    0 SUB_OPTION13_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB5 Option 13")
+        TEXT_BOX_BODY(controlsoption5_14,  tribes_controls_5,    0 SUB_OPTION14_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB5 Option 14")
+        TEXT_BOX_BODY(controlsoption5_15,  tribes_controls_5,    0 SUB_OPTION15_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB5 Option 15")
+        TEXT_BOX_BODY(controlsoption5_16,  tribes_controls_5,    0 SUB_OPTION16_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB5 Option 16")
+        TEXT_BOX_BODY(controlsoption5_17,  tribes_controls_5,    0 SUB_OPTION17_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB5 Option 17")
+        TEXT_BOX_BODY(controlsoption5_18,  tribes_controls_5,    0 SUB_OPTION18_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB5 Option 18")
+        TEXT_BOX_BODY(controlsoption5_19,  tribes_controls_5,    0 SUB_OPTION19_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB5 Option 19")
+        TEXT_BOX_BODY(controlsoption5_20,  tribes_controls_5,    0 SUB_OPTION20_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB5 Option 20")
+        TEXT_BOX_BODY(controlsoption5_21,  tribes_controls_5,    0 SUB_OPTION21_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB5 Option 21")
+        TEXT_BOX_BODY(controlsoption5_22,  tribes_controls_5,    0 SUB_OPTION22_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB5 Option 22")
+        TEXT_BOX_BODY(controlsoption5_23,  tribes_controls_5,    0 SUB_OPTION23_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB5 Option 23")
+        TEXT_BOX_BODY(controlsoption5_24,  tribes_controls_5,    0 SUB_OPTION24_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Controls SUBTAB5 Option 24")
+
+        //GAME OPTIONS
+        //GAME SUBMENU1
+        TEXT_BOX_BODY(gameoption1_1,       tribes_game_1,        0 SUB_OPTION1_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB1 Option 1")
+        TEXT_BOX_BODY(gameoption1_2,       tribes_game_1,        0 SUB_OPTION2_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB1 Option 2")
+        TEXT_BOX_BODY(gameoption1_3,       tribes_game_1,        0 SUB_OPTION3_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB1 Option 3")
+        TEXT_BOX_BODY(gameoption1_4,       tribes_game_1,        0 SUB_OPTION4_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB1 Option 4")
+        TEXT_BOX_BODY(gameoption1_5,       tribes_game_1,        0 SUB_OPTION5_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB1 Option 5")
+        TEXT_BOX_BODY(gameoption1_6,       tribes_game_1,        0 SUB_OPTION6_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB1 Option 6")
+        TEXT_BOX_BODY(gameoption1_7,       tribes_game_1,        0 SUB_OPTION7_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB1 Option 7")
+        TEXT_BOX_BODY(gameoption1_8,       tribes_game_1,        0 SUB_OPTION8_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB1 Option 8")
+        TEXT_BOX_BODY(gameoption1_9,       tribes_game_1,        0 SUB_OPTION9_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB1 Option 9")
+        TEXT_BOX_BODY(gameoption1_10,      tribes_game_1,        0 SUB_OPTION10_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB1 Option 10")
+        TEXT_BOX_BODY(gameoption1_11,      tribes_game_1,        0 SUB_OPTION11_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB1 Option 11")
+        TEXT_BOX_BODY(gameoption1_12,      tribes_game_1,        0 SUB_OPTION12_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB1 Option 12")
+        TEXT_BOX_BODY(gameoption1_13,      tribes_game_1,        0 SUB_OPTION13_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB1 Option 13")
+        TEXT_BOX_BODY(gameoption1_14,      tribes_game_1,        0 SUB_OPTION14_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB1 Option 14")
+        TEXT_BOX_BODY(gameoption1_15,      tribes_game_1,        0 SUB_OPTION15_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB1 Option 15")
+        TEXT_BOX_BODY(gameoption1_16,      tribes_game_1,        0 SUB_OPTION16_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB1 Option 16")
+        TEXT_BOX_BODY(gameoption1_17,      tribes_game_1,        0 SUB_OPTION17_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB1 Option 17")
+        TEXT_BOX_BODY(gameoption1_18,      tribes_game_1,        0 SUB_OPTION18_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB1 Option 18")
+        TEXT_BOX_BODY(gameoption1_19,      tribes_game_1,        0 SUB_OPTION19_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB1 Option 19")
+        TEXT_BOX_BODY(gameoption1_20,      tribes_game_1,        0 SUB_OPTION20_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB1 Option 20")
+        TEXT_BOX_BODY(gameoption1_21,      tribes_game_1,        0 SUB_OPTION21_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB1 Option 21")
+        TEXT_BOX_BODY(gameoption1_22,      tribes_game_1,        0 SUB_OPTION22_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB1 Option 22")
+        TEXT_BOX_BODY(gameoption1_23,      tribes_game_1,        0 SUB_OPTION23_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB1 Option 23")
+        TEXT_BOX_BODY(gameoption1_24,      tribes_game_1,        0 SUB_OPTION24_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB1 Option 24")
+
+        //GAME SUBMENU2
+        TEXT_BOX_BODY(gameoption2_1,       tribes_game_2,        0 SUB_OPTION1_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB2 Option 1")
+        TEXT_BOX_BODY(gameoption2_2,       tribes_game_2,        0 SUB_OPTION2_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB2 Option 2")
+        TEXT_BOX_BODY(gameoption2_3,       tribes_game_2,        0 SUB_OPTION3_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB2 Option 3")
+        TEXT_BOX_BODY(gameoption2_4,       tribes_game_2,        0 SUB_OPTION4_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB2 Option 4")
+        TEXT_BOX_BODY(gameoption2_5,       tribes_game_2,        0 SUB_OPTION5_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB2 Option 5")
+        TEXT_BOX_BODY(gameoption2_6,       tribes_game_2,        0 SUB_OPTION6_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB2 Option 6")
+        TEXT_BOX_BODY(gameoption2_7,       tribes_game_2,        0 SUB_OPTION7_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB2 Option 7")
+        TEXT_BOX_BODY(gameoption2_8,       tribes_game_2,        0 SUB_OPTION8_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB2 Option 8")
+        TEXT_BOX_BODY(gameoption2_9,       tribes_game_2,        0 SUB_OPTION9_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB2 Option 9")
+        TEXT_BOX_BODY(gameoption2_10,      tribes_game_2,        0 SUB_OPTION10_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB2 Option 10")
+        TEXT_BOX_BODY(gameoption2_11,      tribes_game_2,        0 SUB_OPTION11_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB2 Option 11")
+        TEXT_BOX_BODY(gameoption2_12,      tribes_game_2,        0 SUB_OPTION12_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB2 Option 12")
+        TEXT_BOX_BODY(gameoption2_13,      tribes_game_2,        0 SUB_OPTION13_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB2 Option 13")
+        TEXT_BOX_BODY(gameoption2_14,      tribes_game_2,        0 SUB_OPTION14_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB2 Option 14")
+        TEXT_BOX_BODY(gameoption2_15,      tribes_game_2,        0 SUB_OPTION15_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB2 Option 15")
+        TEXT_BOX_BODY(gameoption2_16,      tribes_game_2,        0 SUB_OPTION16_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB2 Option 16")
+        TEXT_BOX_BODY(gameoption2_17,      tribes_game_2,        0 SUB_OPTION17_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB2 Option 17")
+        TEXT_BOX_BODY(gameoption2_18,      tribes_game_2,        0 SUB_OPTION18_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB2 Option 18")
+        TEXT_BOX_BODY(gameoption2_19,      tribes_game_2,        0 SUB_OPTION19_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB2 Option 19")
+        TEXT_BOX_BODY(gameoption2_20,      tribes_game_2,        0 SUB_OPTION20_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB2 Option 20")
+        TEXT_BOX_BODY(gameoption2_21,      tribes_game_2,        0 SUB_OPTION21_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB2 Option 21")
+        TEXT_BOX_BODY(gameoption2_22,      tribes_game_2,        0 SUB_OPTION22_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB2 Option 22")
+        TEXT_BOX_BODY(gameoption2_23,      tribes_game_2,        0 SUB_OPTION23_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB2 Option 23")
+        TEXT_BOX_BODY(gameoption2_24,      tribes_game_2,        0 SUB_OPTION24_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB2 Option 24")
+
+        //GAME SUBMENU3
+        TEXT_BOX_BODY(gameoption3_1,       tribes_game_3,        0 SUB_OPTION1_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB3 Option 1")
+        TEXT_BOX_BODY(gameoption3_2,       tribes_game_3,        0 SUB_OPTION2_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB3 Option 2")
+        TEXT_BOX_BODY(gameoption3_3,       tribes_game_3,        0 SUB_OPTION3_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB3 Option 3")
+        TEXT_BOX_BODY(gameoption3_4,       tribes_game_3,        0 SUB_OPTION4_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB3 Option 4")
+        TEXT_BOX_BODY(gameoption3_5,       tribes_game_3,        0 SUB_OPTION5_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB3 Option 5")
+        TEXT_BOX_BODY(gameoption3_6,       tribes_game_3,        0 SUB_OPTION6_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB3 Option 6")
+        TEXT_BOX_BODY(gameoption3_7,       tribes_game_3,        0 SUB_OPTION7_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB3 Option 7")
+        TEXT_BOX_BODY(gameoption3_8,       tribes_game_3,        0 SUB_OPTION8_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB3 Option 8")
+        TEXT_BOX_BODY(gameoption3_9,       tribes_game_3,        0 SUB_OPTION9_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB3 Option 9")
+        TEXT_BOX_BODY(gameoption3_10,      tribes_game_3,        0 SUB_OPTION10_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB3 Option 10")
+        TEXT_BOX_BODY(gameoption3_11,      tribes_game_3,        0 SUB_OPTION11_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB3 Option 11")
+        TEXT_BOX_BODY(gameoption3_12,      tribes_game_3,        0 SUB_OPTION12_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB3 Option 12")
+        TEXT_BOX_BODY(gameoption3_13,      tribes_game_3,        0 SUB_OPTION13_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB3 Option 13")
+        TEXT_BOX_BODY(gameoption3_14,      tribes_game_3,        0 SUB_OPTION14_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB3 Option 14")
+        TEXT_BOX_BODY(gameoption3_15,      tribes_game_3,        0 SUB_OPTION15_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB3 Option 15")
+        TEXT_BOX_BODY(gameoption3_16,      tribes_game_3,        0 SUB_OPTION16_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB3 Option 16")
+        TEXT_BOX_BODY(gameoption3_17,      tribes_game_3,        0 SUB_OPTION17_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB3 Option 17")
+        TEXT_BOX_BODY(gameoption3_18,      tribes_game_3,        0 SUB_OPTION18_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB3 Option 18")
+        TEXT_BOX_BODY(gameoption3_19,      tribes_game_3,        0 SUB_OPTION19_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB3 Option 19")
+        TEXT_BOX_BODY(gameoption3_20,      tribes_game_3,        0 SUB_OPTION20_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB3 Option 20")
+        TEXT_BOX_BODY(gameoption3_21,      tribes_game_3,        0 SUB_OPTION21_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB3 Option 21")
+        TEXT_BOX_BODY(gameoption3_22,      tribes_game_3,        0 SUB_OPTION22_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB3 Option 22")
+        TEXT_BOX_BODY(gameoption3_23,      tribes_game_3,        0 SUB_OPTION23_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB3 Option 23")
+        TEXT_BOX_BODY(gameoption3_24,      tribes_game_3,        0 SUB_OPTION24_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB3 Option 24")
+
+        //GAME SUBMENU4
+        TEXT_BOX_BODY(gameoption4_1,       tribes_game_4,        0 SUB_OPTION1_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB4 Option 1")
+        TEXT_BOX_BODY(gameoption4_2,       tribes_game_4,        0 SUB_OPTION2_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB4 Option 2")
+        TEXT_BOX_BODY(gameoption4_3,       tribes_game_4,        0 SUB_OPTION3_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB4 Option 3")
+        TEXT_BOX_BODY(gameoption4_4,       tribes_game_4,        0 SUB_OPTION4_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB4 Option 4")
+        TEXT_BOX_BODY(gameoption4_5,       tribes_game_4,        0 SUB_OPTION5_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB4 Option 5")
+        TEXT_BOX_BODY(gameoption4_6,       tribes_game_4,        0 SUB_OPTION6_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB4 Option 6")
+        TEXT_BOX_BODY(gameoption4_7,       tribes_game_4,        0 SUB_OPTION7_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB4 Option 7")
+        TEXT_BOX_BODY(gameoption4_8,       tribes_game_4,        0 SUB_OPTION8_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB4 Option 8")
+        TEXT_BOX_BODY(gameoption4_9,       tribes_game_4,        0 SUB_OPTION9_Y    MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB4 Option 9")
+        TEXT_BOX_BODY(gameoption4_10,      tribes_game_4,        0 SUB_OPTION10_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB4 Option 10")
+        TEXT_BOX_BODY(gameoption4_11,      tribes_game_4,        0 SUB_OPTION11_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB4 Option 11")
+        TEXT_BOX_BODY(gameoption4_12,      tribes_game_4,        0 SUB_OPTION12_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB4 Option 12")
+        TEXT_BOX_BODY(gameoption4_13,      tribes_game_4,        0 SUB_OPTION13_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB4 Option 13")
+        TEXT_BOX_BODY(gameoption4_14,      tribes_game_4,        0 SUB_OPTION14_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB4 Option 14")
+        TEXT_BOX_BODY(gameoption4_15,      tribes_game_4,        0 SUB_OPTION15_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB4 Option 15")
+        TEXT_BOX_BODY(gameoption4_16,      tribes_game_4,        0 SUB_OPTION16_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB4 Option 16")
+        TEXT_BOX_BODY(gameoption4_17,      tribes_game_4,        0 SUB_OPTION17_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB4 Option 17")
+        TEXT_BOX_BODY(gameoption4_18,      tribes_game_4,        0 SUB_OPTION18_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB4 Option 18")
+        TEXT_BOX_BODY(gameoption4_19,      tribes_game_4,        0 SUB_OPTION19_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB4 Option 19")
+        TEXT_BOX_BODY(gameoption4_20,      tribes_game_4,        0 SUB_OPTION20_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB4 Option 20")
+        TEXT_BOX_BODY(gameoption4_21,      tribes_game_4,        0 SUB_OPTION21_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB4 Option 21")
+        TEXT_BOX_BODY(gameoption4_22,      tribes_game_4,        0 SUB_OPTION22_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB4 Option 22")
+        TEXT_BOX_BODY(gameoption4_23,      tribes_game_4,        0 SUB_OPTION23_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB4 Option 23")
+        TEXT_BOX_BODY(gameoption4_24,      tribes_game_4,        0 SUB_OPTION24_Y   MENU_WIDTH_HALF BODY_ELEMENT_HEIGHT,     INVISIBLE,      "Game SUBTAB4 Option 24")
     }
 }

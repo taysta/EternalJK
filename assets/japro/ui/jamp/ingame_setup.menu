@@ -643,6 +643,55 @@
 			}
 		}
 
+        // tribesmenu button
+        itemDef
+        {
+            name				tribesdefaultsbutton_glow
+            style				WINDOW_STYLE_SHADER
+            rect				20 283 185 30
+            background			"gfx/menus/menu_blendbox2"			// Frame around button
+            forecolor			1 1 1 1
+            visible			0
+            // appearance_slot		1
+            decoration
+        }
+
+		itemDef
+		{
+			name				tribesmenubutton
+			group				setup_submenu
+			text				TRIBES
+			type				ITEM_TYPE_BUTTON
+			style				WINDOW_STYLE_EMPTY
+			rect				20 283 170 30
+			font				3
+			textscale			0.9
+			textalignx			170
+			textaligny			5
+			textalign			ITEM_ALIGN_RIGHT
+			textstyle			3
+			forecolor			1 .682 0 1
+			visible			    1
+			descText			"Open tribes setup menu."
+
+			mouseEnter
+			{
+				show			tribesdefaultsbutton_glow
+			}
+			mouseExit
+			{
+				hide			tribesdefaultsbutton_glow
+			}
+			action
+			{
+				play			"sound/interface/button1"
+
+				defer			VideoSetup	videowarningMenu
+                open            ingame_tribessetup
+				hide			ingame_setup
+			}
+		}
+
 		itemDef
 		{
 			name				setup_background

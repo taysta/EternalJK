@@ -38,6 +38,7 @@
 	loadMenu { "ui/jamp/ingame_server.menu"			}
 	loadMenu { "ui/jamp/ingame_race.menu"			}
     loadMenu { "ui/jamp/ingame_tribes.menu"			}
+    loadMenu { "ui/jamp/ingame_tribesclass.menu"	}
 	loadMenu { "ui/jamp/ingame_camera.menu"			}
 	loadMenu { "ui/jamp/ingame_strafehelper.menu"		}
 	loadMenu { "ui/jamp/ingame_spectator.menu"		}

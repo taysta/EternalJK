@@ -9607,7 +9607,7 @@ void Menu_PaintAll() {
 	if (debugMode) {
 		vec4_t v = {1, 1, 1, 1};
 		DC->drawText(5, 25, .75, v, va("fps: %f", DC->FPS), 0, 0, 0, 0);
-		DC->drawText(5, 45, .75, v, va("x: %d  y:%d", DC->cursorx,DC->cursory), 0, 0, 0, 0);
+		DC->drawText(5, 45, .75, v, va("x: %.1f  y:%.1f", DC->cursorx,DC->cursory), 0, 0, 0, 0);
 	}
 }
 

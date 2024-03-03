@@ -1,0 +1,204 @@
+//-----------------------------------------
+// TRIBES CLASS MENU
+//-----------------------------------------
+{
+    menuDef
+    {
+        name					tribesmenu
+        visible					0
+        fullScreen				0
+        outOfBoundsClick
+        rect					142 352 96 110
+        focusColor				1 1 1 1
+
+        // Overall window backdrop
+        itemDef
+        {
+            name				tribes_background
+            group				none
+            style				WINDOW_STYLE_FILLED
+            rect				0 0 96 110
+            backcolor			0 0 .35 .9
+            forecolor			1 1 1 1
+            border				1
+            bordercolor			0 0 .8 1
+            visible				1
+            decoration
+        }
+
+        itemDef
+        {
+            name                tribesTitle
+            text                CLASS
+            rect                0 0 48 22
+            textalign           ITEM_ALIGN_CENTER
+            textalignx          24
+            textaligny          1
+            font                2
+            textscale           0.7
+            forecolor           1 1 1 1
+            visible             1
+        }
+
+        itemDef
+        {
+            name                tribesLight
+            text				Light
+            type				1
+            rect				0 22 48 22
+            textalign			ITEM_ALIGN_CENTER
+            textalignx			24
+            textaligny			11
+            font				4
+            textscale			1
+            forecolor			0 0 1 1
+            visible				1
+            action
+            {
+                play			"sound/interface/button1.wav" ;
+                exec			"model jedi_hf" ;
+                uiScript		closeingame
+            }
+        }
+
+        itemDef
+        {
+            name                tribesMedium
+            text				Medium
+            type				1
+            rect				0 44 48 22
+            textalign			ITEM_ALIGN_CENTER
+            textalignx			24
+            textaligny			11
+            font				4
+            textscale			1
+            forecolor			0.5 .5 0 1
+            visible				1
+            action
+            {
+                play			"sound/interface/button1.wav" ;
+                exec			"model shadowtrooper" ;
+                uiScript		closeingame
+            }
+        }
+
+        itemDef
+        {
+            name				tribesHeavy
+            text				Heavy
+            type				1
+            rect				0 66 48 22
+            textalign			ITEM_ALIGN_CENTER
+            textalignx			24
+            textaligny			11
+            font				4
+            textscale			1
+            forecolor			1 0 0 1
+            visible				1
+            action
+            {
+                play			"sound/interface/button1.wav" ;
+                exec			"model reelo" ;
+                uiScript		closeingame
+            }
+        }
+
+        itemDef
+        {
+            name                packTitle
+            text                PACK
+            rect                48 0 48 22
+            textalign           ITEM_ALIGN_CENTER
+            textalignx          24
+            textaligny          1
+            font                2
+            textscale           0.7
+            forecolor           1 1 1 1
+            visible             1
+        }
+
+        itemDef
+        {
+            name				packShield
+            text				Shield
+            type				1
+            rect				48 22 48 22
+            textalign			ITEM_ALIGN_CENTER
+            textalignx			24
+            textaligny			1
+            font				4
+            textscale			1
+            forecolor			0 1 0.5 1
+            visible				1
+            action
+            {
+                play			"sound/interface/button1.wav" ;
+                exec			"cmd pack shield" ;
+                uiScript		closeingame
+            }
+        }
+
+        itemDef
+        {
+            name				packThrust
+            text				Thrust
+            type				1
+            rect				48 44 48 22
+            textalign			ITEM_ALIGN_CENTER
+            textalignx			24
+            textaligny			1
+            font				4
+            textscale			1
+            forecolor			0 .5 1 1
+            visible				1
+            action
+            {
+                play			"sound/interface/button1.wav" ;
+                exec			"cmd pack thrust" ;
+                uiScript		closeingame
+            }
+        }
+
+        itemDef
+        {
+            name                packBlink
+            text				Blink
+            type				1
+            rect				48 66 48 22
+            textalign			ITEM_ALIGN_CENTER
+            textalignx			24
+            textaligny			1
+            font				4
+            textscale			1
+            forecolor			1 0 0.5 1
+            visible				1
+            action
+            {
+                play			"sound/interface/button1.wav" ;
+                exec			"cmd pack blink" ;
+                uiScript		closeingame
+            }
+        }
+
+        itemDef
+        {
+            name                packOverdrive
+            text				Overdrive
+            type				1
+            rect				48 88 48 22
+            textalign			ITEM_ALIGN_CENTER
+            textalignx			24
+            textaligny			1
+            font				4
+            textscale			1
+            forecolor			0.5 0 1 1
+            visible				1
+            action
+            {
+                play			"sound/interface/button1.wav" ;
+                exec			"cmd pack overdrive" ;
+                uiScript		closeingame
+            }
+        }
+    }
+}
