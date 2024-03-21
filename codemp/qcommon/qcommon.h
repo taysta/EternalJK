@@ -136,6 +136,20 @@ void		NET_Shutdown( void );
 void		NET_Restart_f( void );
 void		NET_Config( qboolean enableNetworking );
 
+typedef int dlHandle_t;
+typedef void(*dl_ended_callback)(dlHandle_t handle, qboolean success, const char *err_msg);
+typedef void(*dl_status_callback)(size_t total_bytes, size_t downloaded_bytes);
+
+void		NET_HTTP_Init();
+void		NET_HTTP_Shutdown();
+void		NET_HTTP_ProcessEvents();
+void		NET_HTTP_AllowClient(int clientNum, netadr_t addr);
+void		NET_HTTP_DenyClient(int clientNum);
+int			NET_HTTP_StartServer(int port);
+void		NET_HTTP_StopServer();
+dlHandle_t	NET_HTTP_StartDownload(const char *url, const char *toPath, dl_ended_callback ended_callback, dl_status_callback status_callback);
+void		NET_HTTP_StopDownload(dlHandle_t handle);
+
 void		NET_SendPacket (netsrc_t sock, int length, const void *data, netadr_t to);
 void		NET_OutOfBandPrint( netsrc_t net_socket, netadr_t adr, const char *format, ...);
 void		NET_OutOfBandData( netsrc_t sock, netadr_t adr, byte *format, int len );
@@ -599,6 +613,9 @@ void FS_HomeRmdir( const char *homePath, qboolean recursive );
 
 qboolean FS_FileExists( const char *file );
 
+qboolean FS_CreatePath (char *OSPath);
+char    *FS_BuildOSPath( const char *qpath );
+char   *FS_BuildOSPath(const char *base, const char *qpath);
 char   *FS_BuildOSPath( const char *base, const char *game, const char *qpath );
 qboolean FS_CompareZipChecksum(const char *zipfile);
 

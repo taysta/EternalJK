@@ -246,6 +246,8 @@ typedef struct clientConnection_s {
 
 	// big stuff at end of structure so most offsets are 15 bits or less
 	netchan_t	netchan;
+	dlHandle_t	httpHandle;
+	char        httpdl[128];
 } clientConnection_t;
 
 extern	clientConnection_t clc;
@@ -516,6 +518,10 @@ extern int cl_connectedToCheatServer;
 
 void CL_SystemInfoChanged( void );
 void CL_ParseServerMessage( msg_t *msg );
+
+void CL_EndHTTPDownload(dlHandle_t handle, qboolean success, const char *err_msg);
+void CL_ProcessHTTPDownload(size_t dltotal, size_t dlnow);
+void CL_KillDownload();
 
 //====================================================================
 

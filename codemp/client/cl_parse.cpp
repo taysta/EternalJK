@@ -720,6 +720,60 @@ void CL_ParseDownload ( msg_t *msg ) {
 	}
 }
 
+/*
+=====================
+CL_EndHTTPDownload
+
+HTTP download ended
+=====================
+*/
+
+void CL_EndHTTPDownload(dlHandle_t handle, qboolean success, const char *err_msg) {
+	if (success) {
+		FS_SV_Rename(clc.downloadTempName, clc.downloadName, qfalse);
+	} else {
+		Com_Error(ERR_DROP, "Download Error: %s", err_msg);
+	}
+
+	*clc.downloadTempName = *clc.downloadName = 0;
+	Cvar_Set("cl_downloadName", "");
+
+
+	CL_NextDownload();
+}
+
+/*
+=====================
+CL_ProcessHTTPDownload
+
+Current status of the HTTP download has changed
+=====================
+*/
+void CL_ProcessHTTPDownload(size_t dltotal, size_t dlnow) {
+	if (dltotal && dlnow) {
+		Cvar_SetValue("cl_downloadSize", (int)dltotal);
+        clc.downloadSize = (int)dltotal;
+		Cvar_SetValue("cl_downloadCount", (int)dlnow);
+        clc.downloadCount = (int)dlnow;
+	}
+}
+
+/*
+=====================
+CL_KillDownload
+=====================
+*/
+void CL_KillDownload() {
+	NET_HTTP_StopDownload(clc.httpHandle);
+
+	if (clc.download) {
+		FS_FCloseFile(clc.download);
+		clc.download = 0;
+	}
+	*clc.downloadTempName = *clc.downloadName = 0;
+	Cvar_Set("cl_downloadName", "");
+}
+
 int CL_GetValueForHidden(const char *s)
 { //string arg here just in case I want to add more sometime and make a lookup table
 	return atoi(hiddenCvarVal);
@@ -869,6 +923,7 @@ void CL_ParseServerMessage( msg_t *msg ) {
 			CL_ParseDownload( msg );
 			break;
 		case svc_mapchange:
+			CL_KillDownload();
 			if ( cls.cgameStarted )
 				CGVM_MapChange();
 			break;

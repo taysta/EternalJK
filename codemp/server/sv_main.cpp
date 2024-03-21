@@ -38,10 +38,12 @@ cvar_t	*sv_timeout;			// seconds without any message
 cvar_t	*sv_zombietime;			// seconds to sink messages after disconnect
 cvar_t	*sv_rconPassword;		// password for remote server commands
 cvar_t	*sv_privatePassword;	// password for the privateClient slots
+cvar_t	*sv_allowDownload;
+cvar_t	*sv_httpdownloads;
+cvar_t	*sv_httpserverport;
 cvar_t	*sv_maxclients;
 cvar_t	*sv_privateClients;		// number of clients reserved for password
 cvar_t	*sv_hostname;
-cvar_t	*sv_allowDownload;
 cvar_t	*sv_master[MAX_MASTER_SERVERS];		// master server ip address
 cvar_t	*sv_reconnectlimit;		// minimum seconds between connect messages
 cvar_t	*sv_showghoultraces;	// report ghoul2 traces
@@ -548,6 +550,15 @@ void SVC_Info( netadr_t from ) {
 	gamedir = Cvar_VariableString( "fs_game" );
 	if( *gamedir ) {
 		Info_SetValueForKey( infostring, "game", gamedir );
+	}
+
+	// webserver port
+	if (sv_httpdownloads->integer) {
+		if (Q_stristr(sv_httpserverport->string, "http://")) {
+			Info_SetValueForKey(infostring, "mvhttpurl", sv_httpserverport->string);
+		} else {
+			Info_SetValueForKey(infostring, "mvhttp", va("%i", sv.http_port));
+		}
 	}
 
 	NET_OutOfBandPrint( NS_SERVER, from, "infoResponse\n%s", infostring );

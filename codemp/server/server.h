@@ -79,6 +79,8 @@ typedef struct server_s {
 	int				restartTime;
 	int				time;
 
+	int				http_port;
+
 	//rwwRMG - added:
 	int				mLocalSubBSPIndex;
 	int				mLocalSubBSPModelOffset;
@@ -243,6 +245,8 @@ extern	cvar_t	*sv_zombietime;
 extern	cvar_t	*sv_rconPassword;
 extern	cvar_t	*sv_privatePassword;
 extern	cvar_t	*sv_allowDownload;
+extern	cvar_t	*sv_httpdownloads;
+extern	cvar_t	*sv_httpserverport;
 extern	cvar_t	*sv_maxclients;
 extern	cvar_t	*sv_privateClients;
 extern	cvar_t	*sv_hostname;

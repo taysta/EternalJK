@@ -748,6 +748,30 @@ Ghoul2 Insert End
 	}
 	*/
 
+	if (!sv_httpdownloads || sv_httpdownloads->modified || sv_httpserverport->modified) {
+		NET_HTTP_StopServer();
+	}
+
+	// here because latched
+	sv_httpdownloads = Cvar_Get("sv_httpdownloads", "0", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_LATCH);
+	sv_httpserverport = Cvar_Get("sv_httpserverport", "0", CVAR_ARCHIVE | CVAR_LATCH);
+
+	if (sv_httpdownloads->integer) {
+		if (!Q_stricmpn(sv_httpserverport->string, "http://", strlen("http://"))) {
+			Com_Printf("HTTP Downloads: redirecting to %s\n", sv_httpserverport->string);
+		} else {
+			sv.http_port = NET_HTTP_StartServer(sv_httpserverport->integer);
+			// allow connected clients to use HTTP server
+			for (i = 0; i < sv_maxclients->integer; i++) {
+				if (svs.clients[i].state >= CS_CONNECTED) {
+					NET_HTTP_AllowClient(i, svs.clients[i].netchan.remoteAddress);
+				}
+			}
+		}
+	}
+
+	SVC_LoadWhitelist();
+
 	for ( client_t *client = svs.clients; client - svs.clients < sv_maxclients->integer; client++) {
 		// bots will not request gamestate, so it must be manually sent
 		// cannot do this above where it says it will because mapname is not set at that time
@@ -1120,4 +1144,8 @@ Ghoul2 Insert Start
 	// disconnect any local clients
 	if( sv_killserver->integer != 2 )
 		CL_Disconnect( qfalse );
+
+
+	NET_HTTP_StopServer();
+	sv.http_port = 0;
 }

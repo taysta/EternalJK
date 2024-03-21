@@ -336,6 +336,7 @@ include(GetGitRevisionDescription)
 get_git_head_revision(GIT_REFSPEC GIT_HASH)
 message(STATUS "Git revision is ${GIT_HASH}")
 
+add_subdirectory(lib/mongoose)
 configure_file(shared/qcommon/q_version.h.in shared/qcommon/q_version.h @ONLY)
 
 #=============================================================================

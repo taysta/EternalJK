@@ -25,7 +25,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 #include "qcommon/qcommon.h"
 
 #ifdef _WIN32
-	#include <winsock.h>
+	#include <winsock2.h>
 
 	typedef int socklen_t;
 
@@ -418,7 +418,7 @@ void Sys_ShowIP(void) {
 NET_IPSocket
 ====================
 */
-SOCKET NET_IPSocket( char *net_interface, int port, int *err ) {
+static SOCKET NET_IPSocket( const char *net_interface, int port, int *err ) {
 	SOCKET				newsocket;
 	struct sockaddr_in	address;
 	u_long				_true = 1;
@@ -438,6 +438,22 @@ SOCKET NET_IPSocket( char *net_interface, int port, int *err ) {
 		Com_Printf( "WARNING: NET_IPSocket: socket: %s\n", NET_ErrorString() );
 		return newsocket;
 	}
+
+#if defined(__GNUC__) && !defined(__MINGW32__)
+	// GLIBC FD_SET macro can not be used with fd equal or greater
+	// than FD_SETSIZE. MinGW and MSVC have their own fd_set
+	// structs and FD_SET macros. In their implementation FD_SET
+	// is limited to FD_SETSIZE elements, but there is no limit on
+	// values. This is necessary on Windows because winsock2.h
+	// socket() returns SOCKET object which may have some large
+	// value.
+	if ( newsocket >= FD_SETSIZE ) {
+		Com_Printf( "WARNING: NET_IPSocket: file descriptor too high\n" );
+		*err = 0;
+		closesocket( newsocket );
+		return INVALID_SOCKET;
+	}
+#endif
 
 	// make it non-blocking
 	if( ioctlsocket( newsocket, FIONBIO, &_true ) == SOCKET_ERROR ) {
@@ -948,6 +964,7 @@ void NET_Config( qboolean enableNetworking ) {
 			closesocket( socks_socket );
 			socks_socket = INVALID_SOCKET;
 		}
+		NET_HTTP_Shutdown();
 	}
 
 	if ( start ) {

@@ -109,6 +109,7 @@ cvar_t	*cl_drawRecording;
 cvar_t	*cl_downloadName;
 cvar_t	*cl_downloadPrompt;
 cvar_t	*cl_downloadOverlay;
+cvar_t	*cl_downloadProtocol;
 
 cvar_t	*cl_filterGames;
 
@@ -610,6 +611,7 @@ CL_ShutdownAll
 =====================
 */
 void CL_ShutdownAll( qboolean shutdownRef ) {
+	CL_KillDownload();
 	if(CL_VideoRecording())
 		CL_CloseAVI();
 
@@ -705,6 +707,7 @@ void CL_MapLoading( void ) {
 		CL_Disconnect( qtrue );
 		Q_strncpyz( cls.servername, "localhost", sizeof(cls.servername) );
 		cls.state = CA_CHALLENGING;		// so the connect screen is drawn
+		clc.httpdl[0] = 0;
 		Key_SetCatcher( 0 );
 		SCR_UpdateScreen();
 		clc.connectTime = -RETRANSMIT_TIMEOUT;
@@ -793,6 +796,8 @@ void CL_Disconnect( qboolean showMainMenu ) {
 	}
 	*clc.downloadTempName = *clc.downloadName = 0;
 	Cvar_Set( "cl_downloadName", "" );
+
+	CL_KillDownload();
 
 	if ( clc.demofile ) {
 		FS_FCloseFile( clc.demofile );
@@ -1063,6 +1068,7 @@ void CL_Connect_f( void ) {
 		cls.state = CA_CHALLENGING;
 	} else {
 		cls.state = CA_CONNECTING;
+		clc.httpdl[0] = 0;
 
 		// Set a client challenge number that ideally is mirrored back by the server.
 		clc.challenge = ((rand() << 16) ^ rand()) ^ Com_Milliseconds();
@@ -1401,19 +1407,40 @@ void CL_BeginDownloadConfirm( void ) {
 		clc.downloadMenuActive = qfalse;
 	}
 
+	if (clc.httpdl[0]) {
+		// downloading over http has priority
+		Cvar_Set("cl_downloadProtocol", "HTTP");
+	} else {
+		Cvar_Set("cl_downloadProtocol", "UDP");
+	}
+
 	Com_DPrintf("***** CL_BeginDownload *****\n"
 				"Localname: %s\n"
 				"Remotename: %s\n"
-				"****************************\n", clc.downloadName, cl_downloadName->string);
+				"****************************\n", clc.downloadName, cl_downloadName->string, cl_downloadPrompt->string);
 
-	clc.downloadBlock = 0; // Starting new file
-	clc.downloadCount = 0;
-	clc.downloadTime = cls.realtime;
+	if (!Q_stricmp(cl_downloadProtocol->string, "HTTP")) {
+		char remotepath[MAX_STRING_CHARS];
 
-	// Set current time to make sure the module knows the real start time after the delay
-	Cvar_SetValue( "cl_downloadTime", (float) cls.realtime );
+		Com_sprintf(remotepath, sizeof(remotepath), "%s/%s", clc.httpdl, cl_downloadName->string);
+		Com_DPrintf("HTTP URL: %s\n", remotepath);
 
-	CL_AddReliableCommand( va("download %s", cl_downloadName->string), qfalse );
+		char *tmp_os_path = FS_BuildOSPath(Cvar_VariableString("fs_homepath"), clc.downloadTempName);
+
+		// Try to create the destination folder
+		FS_CreatePath(tmp_os_path);
+
+		clc.httpHandle = NET_HTTP_StartDownload(remotepath, tmp_os_path, CL_EndHTTPDownload, CL_ProcessHTTPDownload);
+	} else  {
+		clc.downloadBlock = 0; // Starting new file
+		clc.downloadCount = 0;
+		clc.downloadTime = cls.realtime;
+
+		// Set current time to make sure the module knows the real start time after the delay
+		Cvar_SetValue( "cl_downloadTime", (float) cls.realtime );
+
+		CL_AddReliableCommand( va("download %s", cl_downloadName->string), qfalse );
+	}
 }
 
 void CL_BeginDownload( const char *localName, const char *remoteName ) {
@@ -2832,6 +2859,8 @@ void CL_Init( void ) {
 	cl_downloadPrompt = Cvar_Get( "cl_downloadPrompt", "1", CVAR_ARCHIVE, "Confirm pk3 downloads from the server" );
 	cl_downloadOverlay = Cvar_Get( "cl_downloadOverlay", "1", CVAR_ARCHIVE, "Draw download info overlay" );
 
+	cl_downloadProtocol = Cvar_Get("cl_downloadProtocol", "", CVAR_INTERNAL, "Select the download protocol to use");
+
 	// userinfo
 	Cvar_Get ("name", "Padawan", CVAR_USERINFO | CVAR_ARCHIVE_ND, "Player name" );
 	Cvar_Get ("rate", "25000", CVAR_USERINFO | CVAR_ARCHIVE, "Data rate" );
@@ -3045,9 +3074,36 @@ void CL_ServerInfoPacket( netadr_t from, msg_t *msg ) {
 	// if this isn't the correct protocol version, ignore it
 	prot = atoi( Info_ValueForKey( infoString, "protocol" ) );
 	if ( prot != PROTOCOL_VERSION ) {
-		Com_DPrintf( "Different protocol info packet: %s\n", infoString );
+		Com_DPrintf("Different protocol info packet: %s\n", infoString);
 		return;
 	}
+
+	if (!clc.httpdl[0]) {
+		char *val;
+
+		val = Info_ValueForKey(infoString, "mvhttp");
+		if (strtol(val, NULL, 10)) {
+			Com_sprintf(clc.httpdl, sizeof(clc.httpdl), "http://%i.%i.%i.%i:%s",
+						clc.serverAddress.ip[0], clc.serverAddress.ip[1],
+						clc.serverAddress.ip[2], clc.serverAddress.ip[3], val);
+		} else if ((val = Info_ValueForKey(infoString, "mvhttpurl")) && Q_stristr(val, "http://")) {
+			Q_strncpyz(clc.httpdl, val, sizeof(clc.httpdl));
+
+			// make sure there is no "/" on the end
+			// so it always is in the format "http://a.org"
+			size_t len = strlen(clc.httpdl);
+			if (clc.httpdl[len - 1] == '/') {
+				clc.httpdl[len - 1] = 0;
+			}
+		}
+	}
+
+	// if this is an MB2 server, ignore it
+	if (!Q_stricmp(Info_ValueForKey(infoString, "game"), "mbii") && Q_stricmp(Cvar_VariableString("fs_game"), "mbii")) {
+		return;
+	}
+
+
 
 	if ( cl_filterGames && cl_filterGames->string && cl_filterGames->string[0] ) {
 		const char *gameFolder = Info_ValueForKey( infoString, "game" );
