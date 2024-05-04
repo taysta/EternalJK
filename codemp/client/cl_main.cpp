@@ -1569,7 +1569,7 @@ void CL_InitDownloads(void) {
 	else if ( FS_ComparePaks( clc.downloadList, sizeof( clc.downloadList ) , qtrue ) ) {
 		const char *serverInfo = cl.gameState.stringData + cl.gameState.stringOffsets[ CS_SERVERINFO ];
 		const char *serverAllowDownloads = Info_ValueForKey( serverInfo, "sv_allowDownload" );
-		const char *serverHTTPDownloads = Info_ValueForKey( serverInfo, "sv_httpdownloads" );
+		const char *serverHTTPDownloads = Info_ValueForKey( serverInfo, "sv_httpDownloads" );
 
 		Com_Printf("Need paks: %s\n", clc.downloadList );
 

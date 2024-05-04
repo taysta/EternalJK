@@ -748,19 +748,19 @@ Ghoul2 Insert End
 	}
 	*/
 
-	if (!sv_httpdownloads || sv_httpdownloads->modified || sv_httpserverport->modified) {
+	if (!sv_httpDownloads || sv_httpDownloads->modified || sv_httpServerPort->modified) {
 		NET_HTTP_StopServer();
 	}
 
 	// here because latched
-	sv_httpdownloads = Cvar_Get("sv_httpdownloads", "0", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_LATCH);
-	sv_httpserverport = Cvar_Get("sv_httpserverport", "0", CVAR_ARCHIVE | CVAR_LATCH);
+	sv_httpDownloads = Cvar_Get("sv_httpDownloads", "0", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_LATCH);
+	sv_httpServerPort = Cvar_Get("sv_httpServerPort", "0", CVAR_ARCHIVE | CVAR_LATCH);
 
-	if (sv_httpdownloads->integer) {
-		if (!Q_stricmpn(sv_httpserverport->string, "http://", strlen("http://"))) {
-			Com_Printf("HTTP Downloads: redirecting to %s\n", sv_httpserverport->string);
+	if (sv_httpDownloads->integer) {
+		if (!Q_stricmpn(sv_httpServerPort->string, "http://", strlen("http://"))) {
+			Com_Printf("HTTP Downloads: redirecting to %s\n", sv_httpServerPort->string);
 		} else {
-			sv.http_port = NET_HTTP_StartServer(sv_httpserverport->integer);
+			sv.http_port = NET_HTTP_StartServer(sv_httpServerPort->integer);
 			// allow connected clients to use HTTP server
 			for (i = 0; i < sv_maxclients->integer; i++) {
 				if (svs.clients[i].state >= CS_CONNECTED) {

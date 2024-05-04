@@ -39,8 +39,8 @@ cvar_t	*sv_zombietime;			// seconds to sink messages after disconnect
 cvar_t	*sv_rconPassword;		// password for remote server commands
 cvar_t	*sv_privatePassword;	// password for the privateClient slots
 cvar_t	*sv_allowDownload;
-cvar_t	*sv_httpdownloads;
-cvar_t	*sv_httpserverport;
+cvar_t	*sv_httpDownloads;
+cvar_t	*sv_httpServerPort;
 cvar_t	*sv_maxclients;
 cvar_t	*sv_privateClients;		// number of clients reserved for password
 cvar_t	*sv_hostname;
@@ -553,9 +553,9 @@ void SVC_Info( netadr_t from ) {
 	}
 
 	// webserver port
-	if (sv_httpdownloads->integer) {
-		if (Q_stristr(sv_httpserverport->string, "http://")) {
-			Info_SetValueForKey(infostring, "mvhttpurl", sv_httpserverport->string);
+	if (sv_httpDownloads->integer) {
+		if (Q_stristr(sv_httpServerPort->string, "http://")) {
+			Info_SetValueForKey(infostring, "mvhttpurl", sv_httpServerPort->string);
 		} else {
 			Info_SetValueForKey(infostring, "mvhttp", va("%i", sv.http_port));
 		}
