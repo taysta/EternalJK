@@ -24,7 +24,7 @@ jobs:
             sudo apt-get -qq update
             sudo apt-get -y install aptitude
             sudo apt-get -y install gcc-multilib g++-multilib ninja-build
-            sudo apt-get -y install --allow-downgrades libpcre2-8-0:i386 libjpeg-dev:i386 libpng-dev:i386 libcurl4-openssl-dev:i386
+            sudo apt-get -y install --allow-downgrades libpcre2-8-0=10.34-7 libjpeg-dev:i386 libpng-dev:i386 libcurl4-openssl-dev:i386
             sudo aptitude -y install libglib2.0-dev:i386 libsdl2-dev:i386
           else
             sudo apt-get -qq update
@@ -45,7 +45,7 @@ jobs:
           if [ ${{ matrix.arch }} == "x86" ]; then
             OPTIONS+=" -DCMAKE_TOOLCHAIN_FILE=cmake/Toolchains/linux-i686.cmake"
           fi
-          OPTIONS+=" -DBuildJK2SPEngine=ON -DBuildJK2SPGame=ON -DBuildJK2SPRdVanilla=ON"
+          OPTIONS+=" -DBuildJK2SPEngine=OFF -DBuildJK2SPGame=OFF -DBuildJK2SPRdVanilla=OFF"
           cmake $GITHUB_WORKSPACE $OPTIONS
 
       - name: Build
@@ -65,22 +65,10 @@ jobs:
         shell: bash
         run: tar -czvf OpenJK-linux-${{ matrix.arch }}-${{ matrix.build_type }}-${{ matrix.portable }}.tar.gz *
 
-      - name: Create OpenJO binary archive
-        if: ${{ matrix.build_type == 'Release' }}
-        working-directory: ${{ github.workspace }}/install/JediOutcast
-        shell: bash
-        run: tar -czvf OpenJO-linux-${{ matrix.arch }}-${{ matrix.build_type }}-${{ matrix.portable }}.tar.gz *
 
       - uses: actions/upload-artifact@v3
         if: ${{ matrix.build_type == 'Release' }}
         with:
           name: OpenJK-linux-${{ matrix.arch }}-${{ matrix.build_type }}-${{ matrix.portable }}
           path: ${{github.workspace}}/install/JediAcademy/OpenJK-linux-${{ matrix.arch }}-${{ matrix.build_type }}-${{ matrix.portable }}.tar.gz
-          if-no-files-found: error
-
-      - uses: actions/upload-artifact@v3
-        if: ${{ matrix.build_type == 'Release' }}
-        with:
-          name: OpenJO-linux-${{ matrix.arch }}-${{ matrix.build_type }}-${{ matrix.portable }}
-          path: ${{github.workspace}}/install/JediOutcast/OpenJO-linux-${{ matrix.arch }}-${{ matrix.build_type }}-${{ matrix.portable }}.tar.gz
           if-no-files-found: error
