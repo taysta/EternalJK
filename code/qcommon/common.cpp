@@ -1081,7 +1081,7 @@ Com_Init
 void Com_Init( char *commandLine ) {
 	char	*s;
 
-	Com_Printf( "%s %s %s\n", Q3_VERSION, PLATFORM_STRING, SOURCE_DATE );
+	Com_Printf( "%s\n", Q3_VERSION );
 
 	try {
 		Com_InitZoneMemory();
@@ -1162,7 +1162,7 @@ void Com_Init( char *commandLine ) {
 			Cmd_AddCommand ("freeze", Com_Freeze_f);
 		}
 
-		s = va("%s %s %s", Q3_VERSION, PLATFORM_STRING, SOURCE_DATE );
+		s = va("%s", Q3_VERSION);
 		com_version = Cvar_Get ("version", s, CVAR_ROM | CVAR_SERVERINFO );
 
 #ifdef JK2_MODE
