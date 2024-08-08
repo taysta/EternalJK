@@ -273,6 +273,8 @@ vmCvar_t	cg_debugSaber;
 vmCvar_t	cg_debugEvents;
 vmCvar_t	cg_errorDecay;
 vmCvar_t	cg_addMarks;
+vmCvar_t	cg_marksTotalTime;
+vmCvar_t	cg_marksFadeTime;
 vmCvar_t	cg_drawGun;
 vmCvar_t	cg_autoswitch;
 vmCvar_t	cg_simpleItems;
@@ -385,6 +387,8 @@ static cvarTable_t cvarTable[] = {
 	// NOTE : I also create this in UI_Init()
 	{ &cg_addMarks, "cg_marks", "1", CVAR_ARCHIVE },
 	// NOTE : I also create these weapon sway cvars in UI_Init()
+	{ &cg_marksTotalTime, "cg_marksTotalTime", "10000", CVAR_ARCHIVE },
+	{ &cg_marksFadeTime, "cg_marksFadeTime", "1000", CVAR_ARCHIVE },
 	{ &cg_runpitch, "cg_runpitch", "0.002", CVAR_ARCHIVE},
 	{ &cg_runroll, "cg_runroll", "0.005", CVAR_ARCHIVE },
 	{ &cg_bobup , "cg_bobup", "0.005", CVAR_ARCHIVE },

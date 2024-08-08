@@ -598,6 +598,8 @@ extern	vmCvar_t		cg_debugEvents;
 extern	vmCvar_t		cg_errorDecay;
 extern	vmCvar_t		cg_footsteps;
 extern	vmCvar_t		cg_addMarks;
+extern	vmCvar_t		cg_marksTotalTime;
+extern	vmCvar_t		cg_marksFadeTime;
 extern	vmCvar_t		cg_drawGun;
 extern	vmCvar_t		cg_autoswitch;
 extern	vmCvar_t		cg_simpleItems;
