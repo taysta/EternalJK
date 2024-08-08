@@ -243,9 +243,25 @@ void CG_AddMarks( void ) {
 	markPoly_t	*mp, *next;
 	int			t;
 	int			fade;
-
+	int			markTotalTime, markFadeTime;
 	if ( !cg_marks.integer ) {
 		return;
+	}
+
+	if(cg_marksTotalTime.integer)
+	{
+		markTotalTime = cg_marksTotalTime.integer;
+	}
+	else {
+		markTotalTime = MARK_TOTAL_TIME;
+	}
+
+	if(cg_marksFadeTime.integer)
+	{
+		markFadeTime = cg_marksFadeTime.integer;
+	}
+	else {
+		markFadeTime = MARK_FADE_TIME;
 	}
 
 	mp = cg_activeMarkPolys.nextMark;
@@ -255,7 +271,7 @@ void CG_AddMarks( void ) {
 		next = mp->nextMark;
 
 		// see if it is time to completely remove it
-		if ( cg.time > mp->time + MARK_TOTAL_TIME ) {
+		if ( cg.time > mp->time + markTotalTime ) {
 			CG_FreeMarkPoly( mp );
 			continue;
 		}
@@ -280,9 +296,9 @@ void CG_AddMarks( void ) {
 		}
 
 		// fade all marks out with time
-		t = mp->time + MARK_TOTAL_TIME - cg.time;
-		if ( t < MARK_FADE_TIME ) {
-			fade = 255 * t / MARK_FADE_TIME;
+		t = mp->time + markTotalTime - cg.time;
+		if ( t < markFadeTime ) {
+			fade = 255 * t / markFadeTime;
 			if ( mp->alphaFade ) {
 				for ( j = 0 ; j < mp->poly.numVerts ; j++ ) {
 					mp->verts[j].modulate[3] = fade;
@@ -290,7 +306,7 @@ void CG_AddMarks( void ) {
 			}
 			else
 			{
-				float f = (float)t / MARK_FADE_TIME;
+				float f = (float)t / markFadeTime;
 				for ( j = 0 ; j < mp->poly.numVerts ; j++ ) {
 					mp->verts[j].modulate[0] = mp->color[0] * f;
 					mp->verts[j].modulate[1] = mp->color[1] * f;
