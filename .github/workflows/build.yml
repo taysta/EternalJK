@@ -3,13 +3,13 @@ name: build
 on:
   workflow_dispatch:
   push:
-    branches: [master]
+    branches: [macos-fixes-openjk]
     paths-ignore:
       - "**.md"
       - ".gitignore"
       - "docs/*"
   pull_request:
-    branches: [master]
+    branches: [macos-fixes-openjk]
     paths-ignore:
       - "**.md"
       - ".gitignore"
@@ -241,7 +241,7 @@ jobs:
           if-no-files-found: error
 
   create-latest:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/macos-fixes-openjk'
     needs: [msvc, ubuntu, macos]
     runs-on: ubuntu-22.04
     steps:
@@ -272,8 +272,8 @@ jobs:
         uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          automatic_release_tag: "latest"
-          prerelease: false
+          automatic_release_tag: "macos-fixes-openjk"
+          prerelease: true
           title: Latest Build
           files: |
             *.zip
