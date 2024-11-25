@@ -3126,8 +3126,17 @@ void CG_DrawActiveFrame( int serverTime, stereoFrame_t stereoView, qboolean demo
 		}
 	}
 
-	// actually issue the rendering calls
-	CG_DrawActive( stereoView );
+	if (pano.integer) {    // let's grab a panorama!
+		cg.levelShot = qtrue;  //hide the 2d
+		VectorClear(cg.refdef.viewangles);
+		cg.refdef.viewangles[YAW] = -360 * pano.integer / cg_panoNumShots.integer;    //choose angle
+		AnglesToAxis(cg.refdef.viewangles, cg.refdef.viewaxis);
+		CG_DrawActive(stereoView);
+		cg.levelShot = qfalse;
+	} else {
+		// actually issue the rendering calls
+		CG_DrawActive(stereoView);
+	}
 
 	CG_DrawAutoMap();
 

@@ -48,6 +48,8 @@ cvar_t	*cl_debugMove;
 cvar_t	*cl_noprint;
 cvar_t	*cl_motd;
 cvar_t	*cl_motdServer[MAX_MASTER_SERVERS];
+cvar_t   *cl_pano;
+cvar_t   *cl_panoNumShots;
 
 cvar_t	*rcon_client_password;
 cvar_t	*rconAddress;
@@ -2544,6 +2546,21 @@ void CL_Frame ( int msec ) {
 	// decide on the serverTime to render
 	CL_SetCGameTime();
 
+	if (cl_pano->integer && cls.state == CA_ACTIVE) {    //grab some panoramic shots
+		int i = 1;
+		int pref = cl_pano->integer;
+		int oldnoprint = cl_noprint->integer;
+		Con_Close();
+		cl_noprint->integer = 1;    //hide the screen shot msgs
+		for (; i <= cl_panoNumShots->integer; i++) {
+			Cvar_SetValue("pano", i);
+			SCR_UpdateScreen();// update the screen
+			Cbuf_ExecuteText(EXEC_NOW, va("screenshot %dpano%02d\n", pref, i));    //grab this screen
+		}
+		Cvar_SetValue("pano", 0);    //done
+		cl_noprint->integer = oldnoprint;
+	}
+
 	if (render) {
 		// update the screen
 		SCR_UpdateScreen();
@@ -3311,6 +3328,9 @@ void CL_Init( void ) {
 	cl_motdServer[1] = Cvar_Get( "cl_motdServer2", JKHUB_UPDATE_SERVER_NAME, 0 );
 	for ( int index = 2; index < MAX_MASTER_SERVERS; index++ )
 		cl_motdServer[index] = Cvar_Get( va( "cl_motdServer%d", index + 1 ), "", CVAR_ARCHIVE_ND );
+
+	cl_pano = Cvar_Get("pano", "0", 0);
+	cl_panoNumShots = Cvar_Get("cl_panoNumShots", "10", CVAR_ARCHIVE);
 
 	cl_timeout = Cvar_Get ("cl_timeout", "200", 0);
 
