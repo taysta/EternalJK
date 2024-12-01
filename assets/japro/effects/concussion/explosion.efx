@@ -1,0 +1,301 @@
+repeatDelay				157
+
+Particle
+{
+	name				BaseFlare
+
+	count				1 2
+
+	life				900 1000
+
+	rotation			0 360
+
+	rgb
+	{
+		start			0 0 1 0.749 0.7922 1
+		end				0 0 0.6275
+		flags			linear
+	}
+
+	alpha
+	{
+		end				0
+		parm			3
+		flags			linear
+	}
+
+	size
+	{
+		start			100 70
+		end				4 6
+		parm			1
+		flags			linear
+	}
+
+	shaders
+	[
+		gfx/effects/whiteFlare
+	]
+}
+
+Particle
+{
+	name				Shell
+
+	life				350
+
+	delay				50
+
+	rgb
+	{
+		start			0 0 1
+		end				0.749 0.7922 1
+		flags			linear
+	}
+
+	alpha
+	{
+		start			0.9
+		end				0
+		flags			linear
+	}
+
+	size
+	{
+		start			80 90
+		flags			linear
+	}
+
+	shaders
+	[
+		gfx/effects/gcircle
+	]
+}
+
+Tail
+{
+	name				comet_tail
+
+	count				44 36
+
+	life				300 350
+
+	delay				100
+
+	velocity			350 350 350 -350 -350 -350
+
+	acceleration		10 10 10 10 10 5
+
+	rgb
+	{
+		start			0 0 1 0.749 0.7922 1
+		end				0 0 0.6275
+		flags			linear
+	}
+
+	alpha
+	{
+		end				0
+		flags			linear
+	}
+
+	size
+	{
+		start			25
+		end				5
+		flags			linear
+	}
+
+	length
+	{
+		start			30
+		end				35 40
+		flags			linear
+	}
+
+	shaders
+	[
+		gfx/misc/flaretailup
+	]
+}
+
+OrientedParticle
+{
+	name				Ring
+
+	life				500
+
+	rgb
+	{
+		start			0.4588 0.1686 1
+		end				0 0 0.6275
+		flags			linear
+	}
+
+	alpha
+	{
+		start			0.6
+		end				0
+		flags			linear
+	}
+
+	size
+	{
+		end				160 180
+		parm			1
+		flags			linear
+	}
+
+	shaders
+	[
+		gfx/effects/mring1
+	]
+}
+
+Particle
+{
+	name				SecondaryFlare
+
+	count				3
+
+	life				400 500
+
+	delay				125
+
+	origin				-13 0 0
+
+	rotation			0 360
+
+	velocity			150 150 150 -150 -150 -150
+
+	rgb
+	{
+		start			0 0 1 0.749 0.7922 1
+		end				0 0 0.6275
+		flags			linear
+	}
+
+	alpha
+	{
+		start			0
+		parm			2
+		flags			wave
+	}
+
+	size
+	{
+		start			50 40
+		end				1 2
+		parm			1
+		flags			linear
+	}
+
+	shaders
+	[
+		gfx/effects/whiteFlare
+	]
+}
+
+Particle
+{
+	name				OuterShell
+
+	life				300
+
+	rgb
+	{
+		start			0.4745 0.6588 1
+		flags			linear
+	}
+
+	alpha
+	{
+		end				0
+		flags			linear
+	}
+
+	size
+	{
+		end				175 150
+		flags			linear
+	}
+
+	shaders
+	[
+		gfx/effects/gcircle
+	]
+}
+
+Sound
+{
+	sounds
+	[
+		sound/weapons/concussion/explosion.wav
+	]
+}
+
+Particle
+{
+	count				3 2
+
+	life				500
+
+	delay				300
+
+	rotation			0 45
+
+	rotationDelta		20 -20
+
+	velocity			30 30 30 -30 -30 -30
+
+	rgb
+	{
+		start			0.6863 0.1686 1 0 0.3804 1
+		end				0 0 0.6275 1 1 1
+		flags			linear
+	}
+
+	alpha
+	{
+		end				0
+		flags			linear
+	}
+
+	size
+	{
+		start			12 10
+		end				55 50
+		flags			linear
+	}
+
+	shaders
+	[
+		gfx/effects/snowpuff2
+	]
+}
+
+CameraShake
+{
+	life				500 800
+
+	intensity			3 12
+
+	radius				300 400
+}
+
+Light
+{
+	life				600
+
+	rgb
+	{
+		start			0 0.3804 1 0.9216 0.3569 1
+	}
+
+	size
+	{
+		start			300
+		end				100
+		flags			linear
+	}
+}

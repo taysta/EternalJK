@@ -1,0 +1,75 @@
+repeatDelay				300
+
+Particle
+{
+	rotation			-90 90
+
+	rgb
+	{
+		start			0.3 0.3 1
+	}
+
+	size
+	{
+		start			26 30
+	}
+
+	shaders
+	[
+		gfx/effects/whiteFlare
+	]
+}
+
+Particle
+{
+	rotation			-90 90
+
+	rgb
+	{
+		start			0.15 0.15 0.5
+	}
+
+	size
+	{
+		start			32 36
+	}
+
+	shaders
+	[
+		gfx/effects/flare1
+	]
+}
+
+Particle
+{
+	name				Copy of Unnamed Particle 1
+
+	count				2 3
+
+	rotation			-20 20
+
+	size
+	{
+		start			8 18
+	}
+
+	shaders
+	[
+		gfx/effects/shock_ball
+	]
+}
+
+Light
+{
+	rgb
+	{
+		start			0.8471 0.5843 1 0.9922 0.6588 1
+	}
+
+	size
+	{
+		start			170
+		end				25
+		flags			linear
+	}
+}

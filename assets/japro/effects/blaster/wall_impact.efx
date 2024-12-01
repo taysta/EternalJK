@@ -1,0 +1,53 @@
+repeatDelay				785
+
+FxRunner
+{
+	cullrange			1000
+
+	playfx
+	[
+		blaster/sparks
+	]
+}
+
+Decal
+{
+	cullrange			1200
+
+	size
+	{
+		start			5.5 7
+	}
+
+	shaders
+	[
+		gfx/damage/burnmark4
+	]
+}
+
+Sound
+{
+	cullrange			750
+
+	sounds
+	[
+		sound/weapons/blaster/hit_wall.wav
+	]
+}
+
+Light
+{
+	life				250
+
+	rgb
+	{
+		start			1 0.102 0.102
+	}
+
+	size
+	{
+		start			85
+		end				8
+		flags			linear
+	}
+}

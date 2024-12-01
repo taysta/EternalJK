@@ -1,0 +1,48 @@
+repeatDelay				300
+
+FxRunner
+{
+	cullrange			1200
+}
+
+Decal
+{
+	cullrange			1200
+
+	size
+	{
+		start			5.5 7
+	}
+
+	shaders
+	[
+		gfx/damage/burnmark4
+	]
+}
+
+Sound
+{
+	cullrange			1200
+
+	sounds
+	[
+		sound/weapons/bryar/hit_wall.wav
+	]
+}
+
+Light
+{
+	life				200
+
+	rgb
+	{
+		start			1 0.698 0.2
+	}
+
+	size
+	{
+		start			85
+		end				8
+		flags			linear
+	}
+}

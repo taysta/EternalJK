@@ -1,0 +1,241 @@
+repeatDelay				300
+
+Particle
+{
+	name				OrangeGlow
+
+	flags				setShaderTime
+
+	count				9
+
+	life				1300
+
+	delay				0 200
+
+	origin				4 -40 -40 30 40 40
+
+	rotation			0 360
+
+	rotationDelta		-2 2
+
+	velocity			5 -10 -10 10 10 10
+
+	size
+	{
+		start			12 20
+		end				60 75
+		parm			5 25
+		flags			linear clamp
+	}
+
+	shaders
+	[
+		gfx/exp/slower_rocket_explosion
+		gfx/exp/rocket_explosion
+		gfx/exp/explosion1
+	]
+}
+
+Particle
+{
+	name				OrangeGlow2
+
+	life				700 2000
+
+	delay				0 150
+
+	origin				0 -20 -20 5 20 20
+
+	rotation			-180 180
+
+	rotationDelta		-1 1
+
+	velocity			5 -5 -5 10 5 5
+
+	rgb
+	{
+		start			1 0.9725 0.6235 1 0.8353 0.4902
+		end				0.502 0 0 0.9451 0.4078 0.01176
+		flags			linear
+	}
+
+	alpha
+	{
+		end				0
+		parm			70 85
+		flags			linear nonlinear
+	}
+
+	size
+	{
+		start			10 20
+		end				55 70
+		flags			linear
+	}
+
+	shaders
+	[
+		gfx/misc/steam
+		gfx/misc/steam2
+	]
+}
+
+Particle
+{
+	name				LingeringSmoke
+
+	spawnFlags			rgbComponentInterpolation
+
+	count				4
+
+	life				1500 2500
+
+	delay				300
+
+	origin				0 -25 -25 20 25 25
+
+	rotation			0 360
+
+	rotationDelta		-10 10
+
+	velocity			0 -20 -20 10 20 20
+
+	acceleration		-4 -8 -8 4 8 8
+
+	gravity				3 25
+
+	rgb
+	{
+		start			0.9882 0.9098 0.7882 1 1 0.8078
+	}
+
+	alpha
+	{
+		end				0
+		parm			50 70
+		flags			nonlinear
+	}
+
+	size
+	{
+		start			5 10
+		end				35 55
+		flags			linear
+	}
+
+	shaders
+	[
+		gfx/misc/steam
+	]
+}
+
+Light
+{
+	name				Flash
+
+	life				950
+
+	alpha
+	{
+		end				0
+		flags			random linear
+	}
+
+	size
+	{
+		start			350
+		end				100
+		flags			linear
+	}
+}
+
+Particle
+{
+	name				Dust
+
+	flags				useAlpha
+
+	spawnFlags			evenDistribution
+
+	count				3
+
+	life				900 1400
+
+	delay				250 500
+
+	origin				5 -25 -25 15 25 25
+
+	rotation			-180 180
+
+	rotationDelta		-3 3
+
+	velocity			20 -20 -20 40 20 20
+
+	acceleration		-5 -5 -5 5 5 5
+
+	gravity				-50 -30
+
+	rgb
+	{
+		start			1 1 0.4353 0.9451 0.4078 0.01176
+	}
+
+	alpha
+	{
+		end				0
+		parm			50 70
+		flags			linear nonlinear
+	}
+
+	size
+	{
+		start			1 6
+		end				30 50
+		flags			linear
+	}
+
+	shaders
+	[
+		gfx/misc/dotfill_a
+	]
+}
+
+CameraShake
+{
+	name				Shake
+
+	life				500 800
+
+	intensity			1 2
+
+	radius				300 400
+}
+
+Sound
+{
+	name				Boom
+
+	count				2
+
+	sounds
+	[
+		sound/weapons/rocket/hit_wall.wav
+	]
+}
+
+Decal
+{
+	count				2 3
+
+	rotation			0 360
+
+	size
+	{
+		start			40 50
+	}
+
+	shaders
+	[
+		gfx/damage/burnmark4
+	]
+}

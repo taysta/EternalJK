@@ -1,0 +1,69 @@
+repeatDelay				300
+
+Electricity
+{
+	flags				useModel useBBox usePhysics
+
+	spawnFlags			org2fromTrace
+
+	life				75
+
+	bounce				0.8 2
+
+	rgb
+	{
+		start			1 0 0
+		end				1 0 0
+	}
+
+	size
+	{
+		start			3 7
+		flags			linear
+	}
+
+	shaders
+	[
+		gfx/misc/blueLine
+	]
+}
+
+Particle
+{
+	life				30
+
+	rotation			0 360
+
+	rgb
+	{
+		start			1 0 0
+		end				0.502 0 0
+	}
+
+	size
+	{
+		start			14 26
+		flags			random
+	}
+
+	shaders
+	[
+		gfx/misc/lightningFlash
+	]
+}
+
+Light
+{
+	life				40
+
+	rgb
+	{
+		start			1 0 0 1 0.102 0.102
+	}
+
+	size
+	{
+		start			80
+		flags			linear
+	}
+}

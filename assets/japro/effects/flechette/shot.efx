@@ -1,0 +1,45 @@
+repeatDelay				300
+
+Particle
+{
+	count				1 2
+
+	life				15
+
+	velocity			40 0 0 140 0 0
+
+	rgb
+	{
+		start			0.9 0.3 0.1 1 0.8 0.3
+		end				0.4 0.1 0
+		flags			linear
+	}
+
+	size
+	{
+		start			2 6
+	}
+
+	shaders
+	[
+		gfx/effects/whiteGlow
+		gfx/effects/flare1
+	]
+}
+
+Light
+{
+	life				35
+
+	rgb
+	{
+		start			1 0.698 0.2 1 0.702 0.2
+	}
+
+	size
+	{
+		start			20
+		end				4
+		flags			linear
+	}
+}

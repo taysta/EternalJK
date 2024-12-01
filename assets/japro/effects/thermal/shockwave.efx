@@ -1,0 +1,80 @@
+repeatDelay				300
+
+Cylinder
+{
+	life				400
+
+	origin				5 0 0
+
+	alpha
+	{
+		end				0
+		flags			linear
+	}
+
+	size
+	{
+		end				110
+		parm			40
+		flags			linear nonlinear
+	}
+
+	size2
+	{
+		start			8
+		end				125
+		parm			40
+		flags			linear nonlinear
+	}
+
+	length
+	{
+		start			7
+		end				14
+		flags			linear nonlinear
+	}
+
+	shaders
+	[
+		gfx/misc/shockwave
+	]
+}
+
+Cylinder
+{
+	life				700
+
+	origin				5 0 0
+
+	alpha
+	{
+		end				0
+		flags			linear
+	}
+
+	size
+	{
+		end				120
+		parm			80
+		flags			linear nonlinear
+	}
+
+	size2
+	{
+		start			20
+		end				140
+		parm			80
+		flags			linear nonlinear
+	}
+
+	length
+	{
+		start			5
+		flags			linear nonlinear
+	}
+
+	shaders
+	[
+		gfx/misc/shockwave
+	]
+}

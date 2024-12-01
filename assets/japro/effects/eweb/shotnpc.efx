@@ -1,0 +1,75 @@
+repeatDelay				300
+
+Line
+{
+	flags				useAlpha
+
+	origin				100 0 0
+
+	origin2				-100 0 0
+
+	size
+	{
+		start			3
+	}
+
+	shaders
+	[
+		gfx/effects/bryar_blob
+	]
+}
+
+Line
+{
+	origin				100 0 0
+
+	origin2				-100 0 0
+
+	rgb
+	{
+		start			0.8 0.7 0 1 0.7 0.2
+	}
+
+	size
+	{
+		start			5
+	}
+
+	shaders
+	[
+		gfx/effects/whiteGlow
+	]
+}
+
+Particle
+{
+	rgb
+	{
+		start			0.8 0.7 0 1 0.7 0.2
+	}
+
+	size
+	{
+		start			4 4.8
+	}
+
+	shaders
+	[
+		gfx/effects/whiteGlow
+	]
+}
+
+Light
+{
+	rgb
+	{
+		start			0.898 0.698 0 1 0.698 0.2
+	}
+
+	size
+	{
+		start			90
+		end				5
+		flags			linear
+	}
+}

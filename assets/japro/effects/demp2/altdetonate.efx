@@ -1,0 +1,145 @@
+repeatDelay				300
+
+Electricity
+{
+	flags				useModel useBBox usePhysics
+
+	count				2 3
+
+	life				200 300
+
+	delay				0 250
+
+	bounce				2 4
+
+	origin				-2 -20 -20 -2 20 20
+
+	origin2				60 -130 -130 180 130 130
+
+	size
+	{
+		start			3 5
+		end				0.2
+		parm			70
+		flags			nonlinear
+	}
+
+	shaders
+	[
+		gfx/misc/blueLine
+	]
+}
+
+Electricity
+{
+	name				Copy of Unnamed Electricity 0
+
+	flags				useModel useBBox usePhysics
+
+	count				8
+
+	life				200 300
+
+	delay				250 850
+
+	bounce				2 5
+
+	origin				-2 -15 -15 -2 15 15
+
+	origin2				60 -120 -120 180 120 120
+
+	size
+	{
+		start			3 5
+		end				0.2
+		parm			70
+		flags			nonlinear
+	}
+
+	shaders
+	[
+		gfx/misc/blueLine
+	]
+}
+
+Electricity
+{
+	name				Copy of Copy of Unnamed Electri
+
+	flags				useModel useBBox usePhysics
+
+	count				2 4
+
+	life				300 600
+
+	delay				800 2000
+
+	bounce				2 5
+
+	origin				-2 -15 -15 -2 15 15
+
+	origin2				40 -120 -120 180 120 120
+
+	size
+	{
+		start			3 5
+		end				0.2
+		parm			70
+		flags			nonlinear
+	}
+
+	shaders
+	[
+		gfx/misc/blueLine
+	]
+}
+
+Decal
+{
+	count				2
+
+	rotation			0 360
+
+	size
+	{
+		start			10 30
+	}
+
+	shaders
+	[
+		gfx/damage/burnmark1
+		gfx/damage/burnmark4
+	]
+}
+
+Electricity
+{
+	name				Copy of Unnamed Electricity 0
+
+	flags				useModel useBBox usePhysics
+
+	count				2
+
+	life				200 300
+
+	delay				0 100
+
+	bounce				2 4
+
+	origin				-2 -20 -20 -2 20 20
+
+	origin2				60 -130 -130 180 130 130
+
+	size
+	{
+		start			9 12
+		end				0.2
+		parm			70
+		flags			nonlinear
+	}
+
+	shaders
+	[
+		gfx/misc/blueLine
+	]
+}

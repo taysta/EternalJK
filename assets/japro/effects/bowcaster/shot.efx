@@ -1,0 +1,129 @@
+repeatDelay				300
+
+Line
+{
+	flags				useAlpha
+
+	life				10
+
+	origin				8 0 0
+
+	origin2				-80 0 0
+
+	alpha
+	{
+		start			0.6 0.7
+	}
+
+	size
+	{
+		start			1.4 1.6
+	}
+
+	shaders
+	[
+		gfx/effects/greenShot
+	]
+}
+
+Line
+{
+	life				10
+
+	origin				16 0 0
+
+	origin2				-90 0 0
+
+	rgb
+	{
+		start			0 0.7 0 0.2 0.8 0.2
+	}
+
+	alpha
+	{
+		start			0.8 1
+	}
+
+	size
+	{
+		start			4 5
+	}
+
+	shaders
+	[
+		gfx/effects/whiteGlow
+	]
+}
+
+Particle
+{
+	life				10
+
+	origin				-5 0 0
+
+	rgb
+	{
+		start			0 0.7 0 0.2 0.8 0.2
+	}
+
+	alpha
+	{
+		start			0.25 0.35
+	}
+
+	size
+	{
+		start			12 13
+	}
+
+	shaders
+	[
+		gfx/effects/whiteGlow
+	]
+}
+
+Cylinder
+{
+	flags				useAlpha
+
+	life				10
+
+	origin				-5 0 0
+
+	size
+	{
+		start			0
+	}
+
+	size2
+	{
+		start			7.5 8
+	}
+
+	length
+	{
+		start			2 3
+	}
+
+	shaders
+	[
+		gfx/effects/jet3
+	]
+}
+
+Light
+{
+	life				20
+
+	rgb
+	{
+		start			0 1 0
+	}
+
+	size
+	{
+		start			85
+		end				8
+		flags			linear
+	}
+}

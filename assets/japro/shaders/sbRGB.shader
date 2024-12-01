@@ -187,7 +187,6 @@ gfx/effects/sabers/RGBtrail3 {
 	}
 }
 
-
 gfx/effects/sabers/RGBtrail4 {
 	nopicmip
 	notc

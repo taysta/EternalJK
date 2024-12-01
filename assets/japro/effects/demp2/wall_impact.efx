@@ -1,0 +1,149 @@
+repeatDelay				300
+
+OrientedParticle
+{
+	flags				setShaderTime
+
+	count				3
+
+	life				350
+
+	rotation			0 360
+
+	rotationDelta		-8 8
+
+	size
+	{
+		start			16 24
+		end				36 48
+		flags			linear
+	}
+
+	shaders
+	[
+		gfx/exp/demp2
+	]
+}
+
+OrientedParticle
+{
+	flags				setShaderTime
+
+	count				0
+
+	life				350
+
+	rotation			90
+
+	size
+	{
+		start			24
+	}
+
+	shaders
+	[
+		gfx/exp/demp2
+	]
+}
+
+OrientedParticle
+{
+	flags				setShaderTime
+
+	count				0
+
+	life				250
+
+	delay				0 50
+
+	origin				0 -10 -10 0 10 10
+
+	rotation			90
+
+	size
+	{
+		start			8
+		end				10 16
+		flags			linear
+	}
+
+	shaders
+	[
+		gfx/exp/demp2
+	]
+}
+
+Particle
+{
+	count				0
+
+	life				300
+
+	rotation			0 360
+
+	rotationDelta		-20 20
+
+	rgb
+	{
+		start			0.6 0.6 1
+	}
+
+	alpha
+	{
+		end				0
+		parm			40
+		flags			nonlinear
+	}
+
+	size
+	{
+		start			6 8
+		end				15 20
+		flags			random linear
+	}
+
+	shaders
+	[
+		gfx/misc/lightningFlash
+	]
+}
+
+Decal
+{
+	count				2
+
+	size
+	{
+		start			14.5 19
+	}
+
+	shaders
+	[
+		gfx/damage/burnmark4
+	]
+}
+
+Sound
+{
+	sounds
+	[
+		sound/weapons/demp2/hitwall.wav
+	]
+}
+
+Light
+{
+	life				90
+
+	rgb
+	{
+		start			0.6745 0.5922 1
+	}
+
+	size
+	{
+		start			80
+		end				8
+		flags			linear
+	}
+}

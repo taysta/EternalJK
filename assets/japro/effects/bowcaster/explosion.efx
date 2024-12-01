@@ -1,0 +1,126 @@
+repeatDelay				300
+
+Decal
+{
+	rotation			-180 180
+
+	size
+	{
+		start			13 16
+	}
+
+	shaders
+	[
+		gfx/damage/burnmark4
+	]
+}
+
+OrientedParticle
+{
+	flags				setShaderTime
+
+	life				350
+
+	rotation			-45
+
+	size
+	{
+		start			4 14
+		end				16 30
+		flags			linear
+	}
+
+	shaders
+	[
+		gfx/exp/wookie
+	]
+}
+
+OrientedParticle
+{
+	flags				setShaderTime
+
+	count				0 1
+
+	life				350
+
+	rotation			135
+
+	size
+	{
+		start			4 14
+		end				16 30
+		flags			linear
+	}
+
+	shaders
+	[
+		gfx/exp/wookie
+	]
+}
+
+OrientedParticle
+{
+	life				350
+
+	rgb
+	{
+		start			0.2 0.5 0
+	}
+
+	alpha
+	{
+		end				0
+		flags			linear
+	}
+
+	size
+	{
+		start			16
+	}
+
+	shaders
+	[
+		gfx/effects/whiteGlow
+	]
+}
+
+CameraShake
+{
+	name				Shake
+
+	flags				usePhysics
+
+	life				500 800
+
+	bounce				0.2 0.5
+
+	radius				50
+}
+
+Sound
+{
+	name				Boom
+
+	sounds
+	[
+		sound/weapons/bowcaster/hit_wall.wav
+	]
+}
+
+Light
+{
+	life				200
+
+	rgb
+	{
+		start			0.2 1 0.2
+	}
+
+	size
+	{
+		start			85
+		end				8
+		flags			linear
+	}
+}

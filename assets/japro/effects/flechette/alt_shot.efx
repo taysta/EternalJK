@@ -1,0 +1,72 @@
+repeatDelay				300
+
+Particle
+{
+	life				200
+
+	cullrange			800
+
+	velocity			10 0 0 60 0 0
+
+	acceleration		0 -300 -300 0 300 300
+
+	alpha
+	{
+		start			0.2 0.3
+		end				0
+		flags			linear
+	}
+
+	size
+	{
+		start			3 4
+		end				6 8
+		flags			linear
+	}
+
+	shaders
+	[
+		gfx/misc/steam
+	]
+}
+
+Particle
+{
+	spawnFlags			rgbComponentInterpolation
+
+	count				1 2
+
+	rgb
+	{
+		start			0.9961 0.4275 0.08627 1 0.8 0.302
+		end				0.4 0.102 0
+		flags			linear
+	}
+
+	size
+	{
+		start			4 10
+	}
+
+	shaders
+	[
+		gfx/effects/whiteGlow
+	]
+}
+
+Light
+{
+	life				35
+
+	rgb
+	{
+		start			1 0.702 0.2
+	}
+
+	size
+	{
+		start			40
+		end				5
+		flags			linear
+	}
+}

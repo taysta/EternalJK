@@ -1,0 +1,137 @@
+repeatDelay				300
+
+Line
+{
+	count				4 8
+
+	life				100 200
+
+	origin2				16 -20 -20 24 20 20
+
+	alpha
+	{
+		start			0.25 1
+		end				0
+		flags			linear
+	}
+
+	size
+	{
+		start			0.8 1.2
+	}
+
+	shaders
+	[
+		gfx/misc/spark
+		gfx/misc/spark2
+	]
+}
+
+Tail
+{
+	flags				usePhysics
+
+	count				6 10
+
+	life				700 1100
+
+	cullrange			900
+
+	bounce				0.25 0.5
+
+	velocity			120 -110 -110 280 110 110
+
+	gravity				-450 -650
+
+	size
+	{
+		start			0.5 0.9
+	}
+
+	length
+	{
+		start			8 14
+		end				0.1 1
+		flags			linear
+	}
+
+	shaders
+	[
+		gfx/misc/spark
+	]
+}
+
+Particle
+{
+	count				4 6
+
+	life				900 1000
+
+	velocity			8 -12 -12 16 12 12
+
+	gravity				12 24
+
+	alpha
+	{
+		start			0.2 0.4
+		end				0
+		flags			linear
+	}
+
+	size
+	{
+		start			8 24
+		end				16 32
+		flags			linear
+	}
+
+	shaders
+	[
+		gfx/misc/steam
+	]
+}
+
+FxRunner
+{
+	count				1 2
+
+	delay				0 100
+}
+
+Decal
+{
+	size
+	{
+		start			8 12
+	}
+
+	shaders
+	[
+		gfx/damage/burnmark4
+	]
+}
+
+Sound
+{
+	sounds
+	[
+		sound/weapons/emplaced/hit_wall.wav
+	]
+}
+
+Light
+{
+	life				300
+
+	rgb
+	{
+		start			0.898 0.698 0 1 0.702 0.2
+	}
+
+	size
+	{
+		start			90
+		end				5
+		flags			linear
+	}
+}

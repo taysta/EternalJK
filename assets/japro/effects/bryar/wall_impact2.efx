@@ -1,0 +1,191 @@
+repeatDelay				300
+
+Line
+{
+	count				6 8
+
+	life				150 200
+
+	origin2				12 -10 -10 18 10 10
+
+	alpha
+	{
+		start			0.45 1
+		end				0
+		flags			linear
+	}
+
+	size
+	{
+		start			0.25 0.5
+	}
+
+	shaders
+	[
+		gfx/misc/spark
+		gfx/misc/spark2
+	]
+}
+
+Tail
+{
+	count				10
+
+	life				700 1100
+
+	intensity			0.25 0.4
+
+	velocity			120 -120 -120 250 120 120
+
+	gravity				-450 -550
+
+	size
+	{
+		start			0.3 0.45
+	}
+
+	length
+	{
+		start			4 10
+		end				0.1 1
+		flags			linear
+	}
+
+	shaders
+	[
+		gfx/misc/spark
+	]
+}
+
+Particle
+{
+	count				8
+
+	life				600 900
+
+	intensity			0.25 0.4
+
+	velocity			100 -115 -115 200 115 115
+
+	gravity				-450 -550
+
+	size
+	{
+		start			0.4 0.5
+		end				0
+		flags			linear
+	}
+
+	shaders
+	[
+		gfx/misc/spark
+	]
+}
+
+Particle
+{
+	flags				useAlpha
+
+	spawnFlags			rgbComponentInterpolation
+
+	count				8 10
+
+	life				1000 1800
+
+	rotation			-180 180
+
+	rotationDelta		-6 6
+
+	velocity			10 -10 -10 20 10 10
+
+	gravity				2 20
+
+	rgb
+	{
+		start			0 0 0 0.8 0.8 0.8
+	}
+
+	alpha
+	{
+		end				0.1
+		flags			linear
+	}
+
+	size
+	{
+		start			4 6
+		end				12 20
+		flags			linear
+	}
+
+	shaders
+	[
+		gfx/effects/alpha_smoke
+	]
+}
+
+OrientedParticle
+{
+	life				450
+
+	rgb
+	{
+		start			1 0.9 0
+		end				1 0 0
+		flags			linear
+	}
+
+	alpha
+	{
+		end				0
+		flags			linear
+	}
+
+	size
+	{
+		start			4
+	}
+
+	shaders
+	[
+		gfx/effects/whiteflare
+	]
+}
+
+Decal
+{
+	size
+	{
+		start			6.5 8.5
+	}
+
+	shaders
+	[
+		gfx/damage/burnmark4
+	]
+}
+
+Sound
+{
+	sounds
+	[
+		sound/weapons/bryar/hit_wall.wav
+	]
+}
+
+Light
+{
+	life				200
+
+	rgb
+	{
+		start			1 0.698 0.2
+	}
+
+	size
+	{
+		start			85
+		end				8
+		flags			linear
+	}
+}

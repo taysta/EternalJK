@@ -1,0 +1,74 @@
+repeatDelay				300
+
+Particle
+{
+	alpha
+	{
+		start			0.8 1
+	}
+
+	size
+	{
+		start			1.2 2
+	}
+
+	shaders
+	[
+		gfx/misc/spark
+	]
+}
+
+Particle
+{
+	alpha
+	{
+		start			0.1 0.2
+	}
+
+	size
+	{
+		start			5 7
+	}
+
+	shaders
+	[
+		gfx/misc/spark
+	]
+}
+
+Particle
+{
+	count				1 2
+
+	rotation			0 360
+
+	alpha
+	{
+		start			0.1 0.2
+	}
+
+	size
+	{
+		start			7 12
+	}
+
+	shaders
+	[
+		gfx/effects/flare1
+	]
+}
+
+Light
+{
+	rgb
+	{
+		start			1 0.702 0.2
+	}
+
+	size
+	{
+		start			70
+		end				8
+		flags			linear
+	}
+}

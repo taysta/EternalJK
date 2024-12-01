@@ -1,0 +1,99 @@
+repeatDelay				300
+
+Line
+{
+	flags				useAlpha
+
+	origin				8 0 0
+
+	origin2				-80 0 0
+
+	rgb
+	{
+		start			1 1 0
+	}
+
+	alpha
+	{
+		start			0.6 0.7
+	}
+
+	size
+	{
+		start			1.4 1.6
+	}
+
+	shaders
+	[
+		gfx/misc/flaretailup
+	]
+}
+
+Line
+{
+	spawnFlags			rgbComponentInterpolation
+
+	origin				16 0 0
+
+	origin2				-90 0 0
+
+	rgb
+	{
+		start			0 1 0.251 0 0.6078 0.1529
+	}
+
+	alpha
+	{
+		start			0.8 1
+	}
+
+	size
+	{
+		start			4 5
+	}
+
+	shaders
+	[
+		gfx/effects/whiteGlow
+	]
+}
+
+Particle
+{
+	origin				-5 0 0
+
+	rgb
+	{
+		start			0.702 1 0 1 1 0
+	}
+
+	alpha
+	{
+		start			0.4 0.6
+	}
+
+	size
+	{
+		start			14 16
+	}
+
+	shaders
+	[
+		gfx/misc/fxflare
+	]
+}
+
+Light
+{
+	rgb
+	{
+		start			0.2 1 0.2 0 0.6078 0.1529
+	}
+
+	size
+	{
+		start			70
+		end				5
+		flags			linear
+	}
+}

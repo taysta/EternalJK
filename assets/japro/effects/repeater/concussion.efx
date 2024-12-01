@@ -1,0 +1,285 @@
+repeatDelay				300
+
+Cylinder
+{
+	spawnFlags			evenDistribution rgbComponentInterpolation
+
+	count				2
+
+	life				800
+
+	delay				0 700
+
+	size
+	{
+		start			60
+		end				140
+		parm			50
+		flags			linear nonlinear
+	}
+
+	size2
+	{
+		start			2
+		end				140
+		parm			90
+		flags			linear nonlinear
+	}
+
+	length
+	{
+		start			20
+		end				0.1
+		parm			90
+		flags			linear nonlinear
+	}
+
+	shaders
+	[
+		gfx/effects/shock_ripple
+	]
+}
+
+Cylinder
+{
+	spawnFlags			rgbComponentInterpolation
+
+	life				800
+
+	cullrange			550
+
+	size
+	{
+		start			3
+		end				100
+		parm			50
+		flags			linear nonlinear
+	}
+
+	size2
+	{
+		start			24
+		end				100
+		parm			50
+		flags			linear nonlinear
+	}
+
+	shaders
+	[
+		gfx/effects/shock_ripple
+	]
+}
+
+Cylinder
+{
+	life				450
+
+	cullrange			550
+
+	size
+	{
+		end				160
+		parm			90
+		flags			linear nonlinear
+	}
+
+	size2
+	{
+		start			50
+		end				160
+		flags			linear
+	}
+
+	length
+	{
+		start			12
+		end				0.1
+		parm			90
+		flags			linear nonlinear
+	}
+
+	shaders
+	[
+		gfx/effects/shock_ripple
+	]
+}
+
+Particle
+{
+	spawnFlags			orgOnSphere rgbComponentInterpolation
+
+	count				10
+
+	life				700 1200
+
+	delay				0 100
+
+	origin				0 -4 -4 25 4 4
+
+	rotation			0 360
+
+	rotationDelta		-20 20
+
+	velocity			10 0 0 60 0 0
+
+	acceleration		5 -20 -20 10 20 20
+
+	alpha
+	{
+		end				0
+		parm			30
+	}
+
+	size
+	{
+		start			30 40
+		end				0.1
+		parm			70
+		flags			linear nonlinear
+	}
+
+	shaders
+	[
+		gfx/effects/shock_ball
+	]
+}
+
+Particle
+{
+	spawnFlags			rgbComponentInterpolation
+
+	count				10
+
+	life				400 900
+
+	cullrange			400
+
+	rotation			0 360
+
+	velocity			100 -200 -200 150 200 200
+
+	gravity				-100 -200
+
+	rgb
+	{
+		start			0.5 0.5 1 0.8 0.8 1
+	}
+
+	size
+	{
+		start			2 6
+		end				0.1
+		parm			50
+		flags			linear nonlinear
+	}
+
+	shaders
+	[
+		gfx/misc/steam2
+		gfx/misc/steam3
+	]
+}
+
+Decal
+{
+	count				1 2
+
+	rotation			0 360
+
+	size
+	{
+		start			40 60
+	}
+
+	shaders
+	[
+		gfx/damage/burnmark4
+	]
+}
+
+Light
+{
+	name				Flash
+
+	life				550
+
+	rgb
+	{
+		start			0.8471 0.5843 1 0.9922 0.6588 1
+	}
+
+	alpha
+	{
+		end				0
+		flags			random linear
+	}
+
+	size
+	{
+		start			200
+		end				32
+		flags			linear
+	}
+}
+
+CameraShake
+{
+	name				Shake
+
+	flags				usePhysics
+
+	life				500 800
+
+	bounce				2 4
+
+	radius				300 400
+}
+
+Sound
+{
+	cullrange			550
+
+	sounds
+	[
+		sound/weapons/repeater/alt_explode.wav
+	]
+}
+
+OrientedParticle
+{
+	spawnFlags			rgbComponentInterpolation
+
+	life				500
+
+	cullrange			1000
+
+	origin				1 0 0
+
+	rotation			0 360
+
+	rotationDelta		-5 5
+
+	rgb
+	{
+		start			0.3 0.3 1 0.5 0.5 1
+	}
+
+	alpha
+	{
+		end				0
+		parm			40 60
+		flags			nonlinear
+	}
+
+	size
+	{
+		start			2
+		end				60 75
+		flags			linear
+	}
+
+	shaders
+	[
+		gfx/misc/steam3
+	]
+}

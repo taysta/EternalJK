@@ -1,0 +1,118 @@
+repeatDelay				300
+
+Particle
+{
+	life				200 250
+
+	rgb
+	{
+		start			0 1 0.251
+	}
+
+	alpha
+	{
+		end				0
+		flags			linear
+	}
+
+	size
+	{
+		end				10
+		flags			linear
+	}
+
+	shaders
+	[
+		gfx/effects/gcircle
+	]
+}
+
+Particle
+{
+	life				150
+
+	delay				100
+
+	rgb
+	{
+		start			1 1 0 1 0.7255 0
+	}
+
+	alpha
+	{
+		end				0
+		flags			linear
+	}
+
+	size
+	{
+		start			15
+		flags			linear
+	}
+
+	shaders
+	[
+		gfx/misc/fxflare
+	]
+}
+
+Particle
+{
+	name				Copy of Unnamed Particle 1
+
+	count				10 15
+
+	life				300
+
+	delay				0 50
+
+	velocity			100 100 100 -100 -100 -100
+
+	rgb
+	{
+		start			0 0.6078 0.1529 1 0.7255 0
+	}
+
+	alpha
+	{
+		end				0
+		flags			linear
+	}
+
+	size
+	{
+		start			5
+		end				0
+		flags			linear
+	}
+
+	shaders
+	[
+		gfx/misc/fxflare
+	]
+}
+
+Sound
+{
+	sounds
+	[
+		sound/weapons/noghri/impact.mp3
+	]
+}
+
+Light
+{
+	life				150
+
+	rgb
+	{
+		start			0 0.8353 0 0 0.6078 0.1529
+	}
+
+	size
+	{
+		start			70
+		end				5
+		flags			linear
+	}
+}

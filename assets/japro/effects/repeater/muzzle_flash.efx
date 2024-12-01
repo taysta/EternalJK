@@ -1,0 +1,83 @@
+repeatDelay				300
+
+Line
+{
+	life				10
+
+	origin2				24 0 0 30 0 0
+
+	alpha
+	{
+		start			0.5 0.6
+		end				0.35
+		flags			linear
+	}
+
+	size
+	{
+		start			6.75 8.5
+		end				5
+		flags			linear
+	}
+
+	shaders
+	[
+		gfx/effects/bryarSideFlash
+	]
+}
+
+Particle
+{
+	life				30
+
+	origin				5 0 0
+
+	rotation			0 360
+
+	alpha
+	{
+		start			0.8 1
+		end				0.6
+		flags			linear
+	}
+
+	size
+	{
+		start			8 10.5
+		end				7
+		flags			linear
+	}
+
+	shaders
+	[
+		gfx/effects/bryarFrontFlash
+	]
+}
+
+Light
+{
+	rgb
+	{
+		start			0.8471 0.5843 1 0.9922 0.6588 1
+	}
+
+	size
+	{
+		start			100 150
+	}
+}
+
+Sound
+{
+	sounds
+	[
+		sound/weapons/repeater/fire.wav
+	]
+}
+
+CameraShake
+{
+	intensity			0.3 0.4
+
+	radius				60
+}
