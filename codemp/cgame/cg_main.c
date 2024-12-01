@@ -3328,7 +3328,9 @@ void CG_Shutdown( void )
 		CG_LogPrintf( cg.log.file, "End log\n----------------------------------------------------------------\n\n" );
 	CG_CloseLog( &cg.log.file);
 
+	dynTable_free();
 	CG_FreeCosmetics();
+	CG_HUD_FreeElements();
 }
 
 /*
