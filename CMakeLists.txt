@@ -17,6 +17,7 @@
 #============================================================================
 
 cmake_minimum_required(VERSION 3.10)
+include(ExternalProject)
 set(CMAKE_OSX_DEPLOYMENT_TARGET "10.9" CACHE STRING "Minimum OS X deployment version")
 
 set(InOpenJK ON)
@@ -415,9 +416,21 @@ set(SharedCommonSafeFiles
 #
 #=============================================================================
 if(UseInternalJPEG)
-  add_subdirectory(lib/jpeg-9c)
+	# set(GlobalDefines ${GlobalDefines} "INTERNAL_JPEG")
+	ExternalProject_Add(libjpeg-turbo
+			GIT_REPOSITORY https://github.com/libjpeg-turbo/libjpeg-turbo.git
+			GIT_TAG 3.0.0
+			BUILD_COMMAND ${CMAKE_COMMAND} --build . --target jpeg-static
+			INSTALL_COMMAND ""
+			CMAKE_ARGS
+			-DWITH_SIMD=1
+			-DENABLE_SHARED=0
+			-DWITH_ARITH_DEC=0
+			-DWITH_ARITH_ENC=0
+			-DWITH_TURBOJPEG=0
+			-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE})
 else()
-  find_package(JPEG REQUIRED)
+	find_package(JPEG REQUIRED)
 endif()
 
 if(UseInternalZlib)

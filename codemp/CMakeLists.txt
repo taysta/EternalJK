@@ -392,6 +392,13 @@ if(BuildMPEngine)
 	set(MPEngineFiles ${MPEngineAndDedFiles})
 	set(MPEngineDefines ${MPSharedDefines})
 
+	if(UseInternalJPEG)
+		ExternalProject_Get_Property(libjpeg-turbo INSTALL_DIR)
+		ExternalProject_Get_Property(libjpeg-turbo BINARY_DIR)
+		set(JPEG_INCLUDE_DIR "${BINARY_DIR}")
+		set(JPEG_LIBRARIES "${BINARY_DIR}/libjpeg.a")
+	endif()
+
 	#    Dependencies
 
 	if (NOT WIN32)
@@ -688,6 +695,11 @@ if(BuildMPEngine)
 	if (GIT_FOUND)
 		add_dependencies(${MPEngine} GET_GIT_TAG_AND_HASH)
 	endif()
+
+	if(UseInternalJPEG)
+		add_dependencies(${MPVanillaRenderer} libjpeg-turbo)
+	endif()
+
 endif(BuildMPEngine)
 
 #        Dedicated Server (Engine) (jampded.exe)
